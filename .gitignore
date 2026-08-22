@@ -7,12 +7,19 @@
 !/SECURITY.md
 !/package.json
 !/Scripts/MeituanBikeWeChatAds.js
+!/Scripts/XiaohongshuHomeFeedAds.js
 !/Rewrite/MeituanBikeWeChatAds.snippet
+!/Rewrite/MeituanAppAdMedia.snippet
+!/Rewrite/XiaohongshuHomeFeedAds.snippet
 !/Filters/WeChatMiniProgramAds.list
 !/Tests/MeituanBikeWeChatAds.test.js
+!/Tests/MeituanAppAdMedia.test.js
+!/Tests/XiaohongshuHomeFeedAds.test.js
+!/Tests/run.js
 !/Tests/fixtures/README.md
 !/Tests/fixtures/home.json
 !/Tests/fixtures/hermes.json
+!/Tests/fixtures/xiaohongshu-homefeed.json
 !/Tools/secret-scan.sh
 !/.github/workflows/test.yml
 

@@ -1,0 +1,7 @@
+#!name=小红书首页信息流广告清理
+#!desc=仅删除 homefeed 中带明确广告结构标记的条目；普通笔记和直播保持不变，异常时原样放行
+#!author=Belcheck
+#!homepage=https://github.com/belcheckyoung/Belcheck-QX-AdBlock
+
+^https:\/\/rec\.xiaohongshu\.com\/api\/sns\/v6\/homefeed(?:\?.*)?$ url script-response-body https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Scripts/XiaohongshuHomeFeedAds.js
+hostname = rec.xiaohongshu.com

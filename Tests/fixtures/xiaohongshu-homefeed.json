@@ -1,0 +1,61 @@
+{
+  "code": 0,
+  "success": true,
+  "data": [
+    {
+      "id": "note-one",
+      "model_type": "note",
+      "type": "normal",
+      "is_ads": false,
+      "is_tracking": true,
+      "track_id_mix_rank": "synthetic-rank",
+      "track_info": "synthetic-track",
+      "recommend": {
+        "type": "synthetic",
+        "track_id": "synthetic-recommend"
+      },
+      "title": "synthetic note"
+    },
+    {
+      "id": "ad-one",
+      "model_type": "advertisement",
+      "ads_info": {
+        "ads_type": "image_card",
+        "resource_type": "image"
+      }
+    },
+    {
+      "id": "live-one",
+      "model_type": "live_v2",
+      "type": "live",
+      "is_ads": false,
+      "is_tracking": true,
+      "track_id_mix_rank": "synthetic-live-rank",
+      "track_info": "synthetic-live-track",
+      "live": {
+        "room": "synthetic"
+      }
+    },
+    {
+      "id": "flagged-one",
+      "model_type": "note",
+      "is_ads": true
+    },
+    {
+      "id": "wrapped-one",
+      "model_type": "note",
+      "ads_info": {
+        "ads_id": "synthetic-ad"
+      }
+    },
+    {
+      "id": "note-empty-ad-wrapper",
+      "model_type": "note",
+      "type": "normal",
+      "is_ads": false,
+      "ads_info": {},
+      "title": "synthetic cautious boundary"
+    }
+  ],
+  "cursor": "synthetic-page"
+}

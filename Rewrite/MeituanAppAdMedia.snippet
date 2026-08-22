@@ -1,0 +1,7 @@
+#!name=美团 App 广告素材清理
+#!desc=仅拒绝 p0/p1 美团共享 CDN 中明确位于 adunion 目录的广告素材请求，其他路径不会被规则主动拒绝
+#!author=Belcheck
+#!homepage=https://github.com/belcheckyoung/Belcheck-QX-AdBlock
+
+^https:\/\/p[01]\.meituan\.net\/adunion\/.* url reject-img
+hostname = p0.meituan.net, p1.meituan.net
