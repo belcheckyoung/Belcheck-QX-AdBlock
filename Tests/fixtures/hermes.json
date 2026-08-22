@@ -1,0 +1,43 @@
+{
+  "code": 0,
+  "message": "success",
+  "data": [
+    {
+      "spotId": 1,
+      "infos": [
+        {
+          "source": "TENG_XUN_WEI_XIN",
+          "strategyType": "ADS_STRATEGY",
+          "slotId": "adunit-TEST-HERMES",
+          "name": "微信测试广告"
+        },
+        {
+          "source": "MOBIKE",
+          "strategyType": "ADS_STRATEGY",
+          "name": "keep MOBIKE content"
+        },
+        {
+          "source": "OTHER",
+          "strategyType": "CONTENT_STRATEGY",
+          "name": "keep other content"
+        }
+      ]
+    },
+    {
+      "spotId": 2,
+      "nested": {
+        "infos": [
+          {
+            "source": "TENG_XUN_WEI_XIN",
+            "slotId": "adunit-TEST-NESTED",
+            "name": "微信嵌套测试广告"
+          },
+          {
+            "source": "OTHER",
+            "name": "keep nested content"
+          }
+        ]
+      }
+    }
+  ]
+}

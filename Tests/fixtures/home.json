@@ -1,0 +1,28 @@
+{
+  "code": 0,
+  "message": null,
+  "data": {
+    "adsHomeBannerAd": [
+      {
+        "source": "TENG_XUN_WEI_XIN",
+        "slotId": "adunit-TEST-HOME",
+        "adType": 2
+      },
+      {
+        "source": "OTHER",
+        "slotId": "slot-TEST-NORMAL",
+        "title": "keep this item"
+      }
+    ],
+    "adsHomeBannerDaily": [
+      {
+        "source": "MOBIKE",
+        "title": "keep daily content",
+        "link": "https://example.invalid/mobike"
+      }
+    ],
+    "ridingData": {
+      "available": true
+    }
+  }
+}

@@ -1,0 +1,6 @@
+# Quantumult X filter list
+# Capture-verified WeChat mini-program advertising media hosts.
+# These are exact hosts; do not broaden them to wxs.qq.com or qq.com.
+
+host, wxsmw.wxs.qq.com, reject
+host, wximg.wxs.qq.com, reject

@@ -1,0 +1,10 @@
+{
+  "name": "belcheck-qx-adblock",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Capture-verified Quantumult X ad-blocking rules and response rewrites.",
+  "scripts": {
+    "test": "node Tests/MeituanBikeWeChatAds.test.js",
+    "scan:secrets": "bash Tools/secret-scan.sh"
+  }
+}
