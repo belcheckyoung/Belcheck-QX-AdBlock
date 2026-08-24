@@ -1,6 +1,6 @@
 # Belcheck QX AdBlock
 
-一套基于真实流量验证、尽量低误伤的 Quantumult X 广告屏蔽策略。当前覆盖美团单车微信小程序、小红书首页信息流，以及本次已验证的美团 App `/adunion/` 广告素材。
+一套基于真实流量验证、尽量低误伤的 Quantumult X 广告屏蔽策略。当前覆盖美团单车微信小程序、微信广告素材、「每天过一关」小游戏广告测量、小红书首页信息流，以及已验证的美团 App `/adunion/` 广告素材。
 
 仓库只包含广告规则、响应改写脚本、人工合成测试数据和文档。完整 Quantumult X 配置、代理节点、订阅、证书、网络活动导出及真实抓包不会进入仓库。
 
@@ -13,6 +13,13 @@
 - 支持结算页 `adsResource[].infos` 的嵌套广告分组。
 - 保留骑行、结算、支付数据和 `MOBIKE` 自营内容。
 - 以两个已验证微信广告素材域作为兜底。
+
+### 「每天过一关」微信小游戏
+
+- 抓包明文确认为微信 AMS 激励视频，包含 `ad_request`、`AD_IMPRESSION`、`WeInnerAd`、`ams_ad` 和 `video_watch`。
+- 通过 Quantumult X `url-and-header` 同时匹配精确接口和该小游戏 AppID Referer，不拦截其他小程序。
+- 拒绝 Gravity Engine、DataNexus 与 WeInnerAd 测量/归因上报；不伪造「已看完」或奖励结果。
+- 当次视频素材未以独立 HTTP 主机出现，可能来自缓存或微信 MMTLS 承载层；因此测量阻断是辅助策略，不宣称单独完全拦住视频。
 
 ### 小红书 App
 
@@ -34,12 +41,13 @@
 https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite/MeituanBikeWeChatAds.snippet, tag=美团单车微信广告清理, update-interval=86400, opt-parser=false, enabled=true
 https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite/XiaohongshuHomeFeedAds.snippet, tag=小红书首页广告清理, update-interval=86400, opt-parser=false, enabled=true
 https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite/MeituanAppAdMedia.snippet, tag=美团App广告素材清理, update-interval=86400, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/experiment/wechat-minigame-rewarded-ad/Rewrite/WeChatMiniGameAdTelemetry.snippet, tag=每天过一关广告测量辅助阻断, update-interval=86400, opt-parser=false, enabled=true
 ```
 
 在 `[filter_remote]` 中加入微信小程序素材兜底：
 
 ```ini
-https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Filters/WeChatMiniProgramAds.list, tag=微信小程序广告素材, force-policy=reject, update-interval=86400, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/experiment/wechat-minigame-rewarded-ad/Filters/WeChatMiniProgramAds.list, tag=微信广告素材, force-policy=reject, update-interval=86400, opt-parser=false, enabled=true
 ```
 
 随后确认：
@@ -54,6 +62,8 @@ https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Filters
 ## 抓包证据边界
 
 - 美团单车（2026-08-24）：`ads-hermes/resourceList` 三次响应的广告列表均为空；新增的 `v3/recommend/settle/v2` 响应在两个嵌套分组中明确下发腾讯微信弹窗与视频广告项，因此只扩展该精确接口。
+- 每天过一关（2026-08-24）：57 条会话中，Gravity Engine 明文上报广告请求、曝光、展示与提前关闭；DataNexus 上报 `AD_IMPRESSION`；微信 `SdkReport` 上报 `WeInnerAd` 和 `ams_ad`。视频本体没有以可安全封禁的独立明文请求出现。
+- 微信广告素材：保留 `wxsmw.wxs.qq.com`、`wximg.wxs.qq.com`、`img.ssad.qq.com` 和 `smw.ssad.qq.com` 四个精确主机；不扩大为整个 `wxs.qq.com`、`ssad.qq.com` 或 `qq.com`。
 - 小红书：12 次首页响应共 116 个信息流条目，发现 1 个带完整广告结构的条目；其余普通笔记与直播均无该结构。
 - 美团 App：`p0/p1` 共 56 次素材请求，其中 6 次位于 `/adunion/`、对应 4 个广告创意；其余约 50 次位于商家、商品、评价、频道等非 `/adunion/` 路径，因此只允许匹配该目录。
 - 小红书开屏、广告资源和广告行为接口在本次导出中为空响应，没有据此编写未知 JSON 结构。
@@ -65,8 +75,9 @@ https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Filters
 
 - `Scripts/MeituanBikeWeChatAds.js`：美团单车响应过滤实现。
 - `Scripts/XiaohongshuHomeFeedAds.js`：小红书首页广告对象过滤实现。
-- `Rewrite/`：三个可独立启停的远程模块。
-- `Filters/WeChatMiniProgramAds.list`：微信小程序已验证素材域兜底。
+- `Rewrite/WeChatMiniGameAdTelemetry.snippet`：「每天过一关」广告测量辅助阻断。
+- `Rewrite/`：四个可独立启停的远程模块。
+- `Filters/WeChatMiniProgramAds.list`：微信小程序及微信内原生广告的已验证素材主机。
 - `Tests/`：完全人工合成、无真实用户数据的回归测试。
 - `Tools/secret-scan.sh`：提交白名单、当前文件与完整 Git 历史敏感内容检查。
 
@@ -84,6 +95,8 @@ npm run scan:secrets
 ## 已知限制
 
 - 结算页规则只删除 `adsResource` 中有腾讯微信、`ADS_STRATEGY` 或微信 `adunit-` 组合强标记的对象；不会删除会员续卡引导或其他结算页内容。
+- 微信小游戏广告的请求和素材可位于 `sz*short.weixin.qq.com/mmtls/*` 共享加密承载层；不得封禁这些主机，否则小游戏接口、登录、进度同步和其他微信功能可能一起失效。
+- 激励视频被拦截后，小游戏可能显示加载失败且不发放「加行」奖励。本仓库不伪造看完或奖励事件。
 - 美团 App 当前规则按路径处理请求，不检查响应 MIME；可阻止已确认广告图片，但可能留下文字卡片或空白占位。需要抓到广告决策 JSON 后才能安全删除整个组件。
 - 小红书页面可能缓存旧响应。更新模块后应重启隧道和 App，再观察新请求。
 - `main` 分支 Raw 地址会随仓库更新。需要固定行为时，可将 URL 中的 `main` 替换为已审计的 Release 标签或完整提交哈希。

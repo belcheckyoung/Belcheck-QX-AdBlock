@@ -11,10 +11,12 @@
 !/Rewrite/MeituanBikeWeChatAds.snippet
 !/Rewrite/MeituanAppAdMedia.snippet
 !/Rewrite/XiaohongshuHomeFeedAds.snippet
+!/Rewrite/WeChatMiniGameAdTelemetry.snippet
 !/Filters/WeChatMiniProgramAds.list
 !/Tests/MeituanBikeWeChatAds.test.js
 !/Tests/MeituanAppAdMedia.test.js
 !/Tests/XiaohongshuHomeFeedAds.test.js
+!/Tests/WeChatMiniGameAdTelemetry.test.js
 !/Tests/run.js
 !/Tests/fixtures/README.md
 !/Tests/fixtures/home.json

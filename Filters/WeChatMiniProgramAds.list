@@ -1,6 +1,13 @@
 # Quantumult X filter list
-# Capture-verified WeChat mini-program advertising media hosts.
-# These are exact hosts; do not broaden them to wxs.qq.com or qq.com.
+# Capture-verified WeChat advertising media hosts.
+# wx*.wxs.qq.com: mini-program advertising media.
+# *.ssad.qq.com below: native social advertising images and video observed in
+# the 2026-08-22 WeChat capture. Keep these as exact hosts; the wider WeChat
+# transport and content CDNs also carry normal articles, comments, and media.
+# These are exact hosts; do not broaden them to wxs.qq.com, ssad.qq.com or
+# qq.com.
 
 host, wxsmw.wxs.qq.com, reject
 host, wximg.wxs.qq.com, reject
+host, img.ssad.qq.com, reject
+host, smw.ssad.qq.com, reject

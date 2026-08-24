@@ -1,0 +1,17 @@
+#!name=每天过一关｜广告测量辅助阻断
+#!desc=仅匹配该小游戏 Referer，拒绝广告与行为测量上报；不伪造广告看完或奖励结果
+#!author=Belcheck
+#!homepage=https://github.com/belcheckyoung/Belcheck-QX-AdBlock
+
+# Capture evidence: ad_request / AD_IMPRESSION / adShow / ad_close_early.
+^https:\/\/api\.gravity-engine\.com\/event_center\/api\/v1\/event\/collect\/(?:\?.*)?$ \r\nReferer:\s*https:\/\/servicewechat\.com\/wx6f959f42eaa905b4\/ url-and-header reject-dict
+
+# Capture evidence: AD_IMPRESSION. This endpoint also carries foreground and
+# background events, so the rule must retain the exact mini-game Referer.
+^https:\/\/api\.datanexus\.qq\.com\/data-nexus-cgi\/miniprogram(?:\?.*)?$ \r\nReferer:\s*https:\/\/servicewechat\.com\/wx6f959f42eaa905b4\/ url-and-header reject-dict
+
+# Capture evidence: WeInnerAd / ams_ad / video_watch / is_reward_granted.
+# SdkReport is shared by WeChat; the exact mini-game Referer is mandatory.
+^https:\/\/report-online\.sh\.wxgateway\.com\/SdkReport(?:\?.*)?$ \r\nReferer:\s*https:\/\/servicewechat\.com\/wx6f959f42eaa905b4\/ url-and-header reject-200
+
+hostname = %APPEND% api.gravity-engine.com, api.datanexus.qq.com, report-online.sh.wxgateway.com

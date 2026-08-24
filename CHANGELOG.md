@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.0 - 2026-08-24
+
+- 新增「每天过一关」微信小游戏广告测量辅助阻断，仅匹配该 AppID Referer。
+- 精确拒绝 Gravity Engine、DataNexus 与 WeInnerAd 测量上报，不伪造广告看完或奖励结果。
+- 微信素材列表增加已由独立抓包验证的 `img.ssad.qq.com` 和 `smw.ssad.qq.com`，不扩大为整个 `ssad.qq.com`。
+- 增加人工合成回归测试，检查目标 Referer 命中、其他小游戏原样放行与共享 MMTLS 域保留。
+
 ## 1.1.1 - 2026-08-24
 
 - 新增美团单车结算接口 `v3/recommend/settle/v2` 的精确响应过滤。
