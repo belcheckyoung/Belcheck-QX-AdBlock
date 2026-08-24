@@ -1,7 +1,7 @@
 #!name=美团单车微信广告清理
-#!desc=清理腾讯微信广告及非 MOBIKE 广告策略项；保留 MOBIKE 正常内容，异常时原样放行
+#!desc=清理首页、Hermes 及结算页的腾讯微信广告；保留 MOBIKE 与正常结算内容，异常时原样放行
 #!author=Belcheck
 #!homepage=https://github.com/belcheckyoung/Belcheck-QX-AdBlock
 
-^https:\/\/bike\.meituan\.com\/api\/(?:v3\/recommend\/home\/v3|ads-hermes\/resourceList)(?:\?.*)?$ url script-response-body https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Scripts/MeituanBikeWeChatAds.js
+^https:\/\/bike\.meituan\.com\/api\/(?:v3\/recommend\/(?:home\/v3|settle\/v2)|ads-hermes\/resourceList)(?:\?.*)?$ url script-response-body https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Scripts/MeituanBikeWeChatAds.js
 hostname = bike.meituan.com

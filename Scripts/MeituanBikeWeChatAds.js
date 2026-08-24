@@ -1,11 +1,11 @@
 /*
  * Quantumult X - Meituan Bike WeChat Ads
- * Capture-derived response filter, 2026-08-22.
+ * Capture-derived response filter, updated 2026-08-24.
  *
- * Removes WeChat-native ads and non-MOBIKE Hermes ad-strategy entries from two
- * Meituan Bike APIs. Normal riding data and MOBIKE-operated content are
- * preserved. All failures are fail-open: the original response is returned
- * unchanged.
+ * Removes WeChat-native ads and non-MOBIKE Hermes ad-strategy entries from
+ * three exact Meituan Bike APIs, including nested ad groups on the settlement
+ * page. Normal riding data and MOBIKE-operated content are preserved. All
+ * failures are fail-open: the original response is returned unchanged.
  */
 
 var TAG = "[MTBikeAdClean]";
@@ -18,6 +18,7 @@ var url = typeof $request !== "undefined" && typeof $request.url === "string"
 
 var HOME_RE = /^https?:\/\/bike\.meituan\.com\/api\/v3\/recommend\/home\/v3(?:\?|$)/i;
 var HERMES_RE = /^https?:\/\/bike\.meituan\.com\/api\/ads-hermes\/resourceList(?:\?|$)/i;
+var SETTLE_RE = /^https?:\/\/bike\.meituan\.com\/api\/v3\/recommend\/settle\/v2(?:\?|$)/i;
 
 function isObject(value) {
   return value !== null && typeof value === "object" && !Array.isArray(value);
@@ -73,6 +74,29 @@ function isHermesWechatAd(item) {
     (/^adunit-/i.test(slotId) && /(微信|WEI[ _-]?XIN|TENG[ _-]?XUN)/i.test(wechatText));
 }
 
+function cleanInfosArray(value) {
+  var cleaned = [];
+  var removed = 0;
+
+  value.forEach(function (item) {
+    if (isHermesWechatAd(item)) {
+      removed += 1;
+      return;
+    }
+
+    if (Array.isArray(item)) {
+      var nested = cleanInfosArray(item);
+      removed += nested.removed;
+      if (nested.value.length > 0) cleaned.push(nested.value);
+      return;
+    }
+
+    cleaned.push(item);
+  });
+
+  return { value: cleaned, removed: removed };
+}
+
 function cleanHermesInfos(root) {
   var removed = 0;
   var stack = [root];
@@ -91,12 +115,11 @@ function cleanHermesInfos(root) {
     Object.keys(node).forEach(function (key) {
       var value = node[key];
       if (key === "infos" && Array.isArray(value)) {
-        var kept = value.filter(function (item) {
-          return !isHermesWechatAd(item);
-        });
-        removed += value.length - kept.length;
-        node[key] = kept;
-        kept.forEach(function (item) {
+        var result = cleanInfosArray(value);
+        removed += result.removed;
+        if (result.removed > 0) node[key] = result.value;
+        var next = result.removed > 0 ? result.value : value;
+        next.forEach(function (item) {
           if (item && typeof item === "object") stack.push(item);
         });
       } else if (value && typeof value === "object") {
@@ -107,16 +130,25 @@ function cleanHermesInfos(root) {
   return removed;
 }
 
+function cleanSettle(root) {
+  var data = isObject(root) && isObject(root.data) ? root.data : null;
+  if (!data || !Array.isArray(data.adsResource)) return 0;
+  return cleanHermesInfos(data.adsResource);
+}
+
 try {
   var isHome = HOME_RE.test(url);
   var isHermes = HERMES_RE.test(url);
+  var isSettle = SETTLE_RE.test(url);
 
-  if (!body || (!isHome && !isHermes)) {
+  if (!body || (!isHome && !isHermes && !isSettle)) {
     $done({});
   } else {
     var json = JSON.parse(body);
-    var route = isHome ? "home" : "hermes";
-    var removed = isHome ? cleanHome(json) : cleanHermesInfos(json);
+    var route = isHome ? "home" : (isHermes ? "hermes" : "settle");
+    var removed = isHome
+      ? cleanHome(json)
+      : (isHermes ? cleanHermesInfos(json) : cleanSettle(json));
 
     if (removed > 0) {
       console.log(TAG + " " + route + " removed=" + removed);

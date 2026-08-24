@@ -29,10 +29,20 @@ allowed = {
     "Tests/fixtures/README.md",
     "Tests/fixtures/hermes.json",
     "Tests/fixtures/home.json",
+    "Tests/fixtures/settle.json",
     "Tests/fixtures/xiaohongshu-homefeed.json",
     "Tests/run.js",
     "package.json",
     "Tools/secret-scan.sh",
+}
+
+# Reachable experiment branches may contain these separately reviewed files
+# even though the stable main branch does not publish them. They remain fully
+# content-scanned below and are not allowed into the current working tree.
+history_only_allowed = {
+    "Rewrite/TencentVideoHTTPAnalyzerCompat.snippet",
+    "Scripts/TencentVideoHTTPAnalyzerCompat.js",
+    "Tests/TencentVideoHTTPAnalyzerCompat.test.js",
 }
 
 tracked = set(subprocess.check_output(["git", "ls-files"], text=True).splitlines())
@@ -112,7 +122,7 @@ for commit in commits:
         mode, object_type, object_id = metadata.decode("ascii").split()
         name = raw_name.decode("utf-8", errors="replace")
 
-        if name not in allowed:
+        if name not in allowed | history_only_allowed:
             print(f"history-allowlist-extra: object={object_id[:12]} [REDACTED]")
             sys.exit(1)
         if object_type != "blob" or mode == "120000":

@@ -19,6 +19,7 @@
 !/Tests/fixtures/README.md
 !/Tests/fixtures/home.json
 !/Tests/fixtures/hermes.json
+!/Tests/fixtures/settle.json
 !/Tests/fixtures/xiaohongshu-homefeed.json
 !/Tools/secret-scan.sh
 !/.github/workflows/test.yml

@@ -1,6 +1,6 @@
 {
   "name": "belcheck-qx-adblock",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "description": "Capture-verified Quantumult X ad-blocking rules and response rewrites.",
   "scripts": {

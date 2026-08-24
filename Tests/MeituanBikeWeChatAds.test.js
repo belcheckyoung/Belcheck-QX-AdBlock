@@ -38,6 +38,7 @@ function execute(url, body) {
 
 const homeUrl = "https://bike.meituan.com/api/v3/recommend/home/v3";
 const hermesUrl = "https://bike.meituan.com/api/ads-hermes/resourceList";
+const settleUrl = "https://bike.meituan.com/api/v3/recommend/settle/v2";
 
 const homeInput = fixture("home.json");
 const homeOutput = execute(homeUrl, JSON.stringify(homeInput));
@@ -60,13 +61,33 @@ assert.deepStrictEqual(
   ["keep nested content"]
 );
 
+const settleInput = fixture("settle.json");
+const settleOutput = execute(`${settleUrl}?synthetic=1`, JSON.stringify(settleInput));
+assert.ok(settleOutput.body);
+const settle = JSON.parse(settleOutput.body);
+assert.deepStrictEqual(
+  settle.data.adsResource[0].infos.map((group) => group.map((item) => item.name)),
+  [["keep MOBIKE settlement content"], ["keep partner settlement content"]]
+);
+assert.deepStrictEqual(settle.data.adsResource[1].infos, []);
+assert.deepStrictEqual(settle.data.adsResource[2], settleInput.data.adsResource[2]);
+assert.deepStrictEqual(settle.data.adsMission, settleInput.data.adsMission);
+assert.deepStrictEqual(settle.data.payStatus, settleInput.data.payStatus);
+assert.deepStrictEqual(settle.data.receipt, settleInput.data.receipt);
+
 const secondPass = execute(homeUrl, homeOutput.body);
 assert.strictEqual(secondPass.body, undefined, "the rewrite must be idempotent");
+
+const settleSecondPass = execute(settleUrl, settleOutput.body);
+assert.strictEqual(settleSecondPass.body, undefined, "the settlement rewrite must be idempotent");
 
 const unrelated = execute("https://bike.meituan.com/api/ride/status", "{}");
 assert.strictEqual(unrelated.body, undefined, "unrelated routes must not be modified");
 
+const adjacent = execute("https://bike.meituan.com/api/v3/recommend/settle/v20", JSON.stringify(settleInput));
+assert.strictEqual(adjacent.body, undefined, "adjacent settlement routes must not be modified");
+
 const malformed = execute(homeUrl, "{not-json");
 assert.strictEqual(malformed.body, undefined, "malformed JSON must fail open");
 
-console.log("PASS home hermes preserve-mobike nested idempotent exact-url fail-open");
+console.log("PASS home hermes settle nested preserve-normal idempotent exact-url fail-open");

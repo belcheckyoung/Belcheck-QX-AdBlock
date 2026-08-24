@@ -1,0 +1,64 @@
+{
+  "code": 0,
+  "message": "success",
+  "data": {
+    "adsMission": [],
+    "adsLocked": [],
+    "adsPaid": [],
+    "payStatus": 2,
+    "adsResource": [
+      {
+        "businessId": 99,
+        "spotId": 34,
+        "type": 1,
+        "infos": [
+          [
+            {
+              "source": "TENG_XUN_WEI_XIN",
+              "strategyType": "ADS_STRATEGY",
+              "slotId": "adunit-TEST-SETTLE-POPUP",
+              "name": "synthetic settlement popup ad"
+            },
+            {
+              "source": "MOBIKE",
+              "strategyType": "ADS_STRATEGY",
+              "name": "keep MOBIKE settlement content"
+            }
+          ],
+          [
+            {
+              "source": "PARTNER_CONTENT",
+              "strategyType": "CONTENT_STRATEGY",
+              "name": "keep partner settlement content"
+            }
+          ]
+        ]
+      },
+      {
+        "businessId": 99,
+        "spotId": 77,
+        "type": 1,
+        "infos": [
+          [
+            {
+              "source": "TENG_XUN_WEI_XIN",
+              "strategyType": "ADS_STRATEGY",
+              "slotId": "adunit-TEST-SETTLE-VIDEO",
+              "name": "synthetic settlement video ad"
+            }
+          ]
+        ]
+      },
+      {
+        "businessId": 99,
+        "spotId": 87,
+        "type": 1,
+        "infos": []
+      }
+    ],
+    "receipt": {
+      "amountText": "keep normal settlement data",
+      "available": true
+    }
+  }
+}
