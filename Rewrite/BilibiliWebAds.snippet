@@ -1,0 +1,11 @@
+#!name=Bilibili 网页广告清理
+#!desc=删除首页推荐流与首屏轮播中的明确广告对象，并精确拒绝已验证的网页商业素材和曝光请求；异常时原样放行
+#!author=Belcheck
+#!homepage=https://github.com/belcheckyoung/Belcheck-QX-AdBlock
+
+^https:\/\/api\.bilibili\.com\/x\/web-interface\/wbi\/index\/top\/feed\/rcmd(?:\?.*)?$ url script-response-body https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/feature/bilibili-web-adblock/Scripts/BilibiliWebAds.js
+^https:\/\/www\.bilibili\.com\/(?:\?.*)?$ url script-response-body https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/feature/bilibili-web-adblock/Scripts/BilibiliWebAds.js
+^https:\/\/impression\.biligame\.com\/api\/impression\/bilibili_pc(?:\?.*)?$ url reject
+^https:\/\/s1\.hdslb\.com\/bfs\/cm\/cm-sdk\/static\/js\/bili-collect\.js(?:\?.*)?$ url reject
+^https:\/\/i[0-9]\.hdslb\.com\/bfs\/sycp_brand\/creative_img\/.* url reject-img
+hostname = api.bilibili.com, www.bilibili.com, impression.biligame.com, s1.hdslb.com, i0.hdslb.com, i1.hdslb.com, i2.hdslb.com
