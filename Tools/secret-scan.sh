@@ -40,9 +40,14 @@ allowed = {
 # even though the stable main branch does not publish them. They remain fully
 # content-scanned below and are not allowed into the current working tree.
 history_only_allowed = {
+    "Rewrite/BilibiliWebAds.snippet",
     "Rewrite/TencentVideoHTTPAnalyzerCompat.snippet",
+    "Rewrite/WeChatMiniGameAdTelemetry.snippet",
+    "Scripts/BilibiliWebAds.js",
     "Scripts/TencentVideoHTTPAnalyzerCompat.js",
+    "Tests/BilibiliWebAds.test.js",
     "Tests/TencentVideoHTTPAnalyzerCompat.test.js",
+    "Tests/WeChatMiniGameAdTelemetry.test.js",
 }
 
 tracked = set(subprocess.check_output(["git", "ls-files"], text=True).splitlines())
