@@ -1,11 +1,12 @@
 /*
  * Quantumult X - Meituan Bike WeChat Ads
- * Capture-derived response filter, updated 2026-08-24.
+ * Capture-derived response filter, updated 2026-08-25.
  *
  * Removes WeChat-native ads and non-MOBIKE Hermes ad-strategy entries from
- * three exact Meituan Bike APIs, including nested ad groups on the settlement
- * page. Normal riding data and MOBIKE-operated content are preserved. All
- * failures are fail-open: the original response is returned unchanged.
+ * three exact Meituan Bike APIs, including nested ad groups and empty ad shells
+ * on the settlement page. Normal riding data and MOBIKE-operated content are
+ * preserved. All failures are fail-open: the original response is returned
+ * unchanged.
  */
 
 var TAG = "[MTBikeAdClean]";
@@ -130,10 +131,27 @@ function cleanHermesInfos(root) {
   return removed;
 }
 
+function hasInfosContent(value) {
+  if (Array.isArray(value)) {
+    return value.some(function (item) {
+      return hasInfosContent(item);
+    });
+  }
+  return value !== null && typeof value !== "undefined";
+}
+
 function cleanSettle(root) {
   var data = isObject(root) && isObject(root.data) ? root.data : null;
   if (!data || !Array.isArray(data.adsResource)) return 0;
-  return cleanHermesInfos(data.adsResource);
+
+  var removed = cleanHermesInfos(data.adsResource);
+  if (removed > 0) {
+    data.adsResource = data.adsResource.filter(function (resource) {
+      if (!isObject(resource) || !Array.isArray(resource.infos)) return true;
+      return hasInfosContent(resource.infos);
+    });
+  }
+  return removed;
 }
 
 try {

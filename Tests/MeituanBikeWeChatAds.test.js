@@ -69,11 +69,18 @@ assert.deepStrictEqual(
   settle.data.adsResource[0].infos.map((group) => group.map((item) => item.name)),
   [["keep MOBIKE settlement content"], ["keep partner settlement content"]]
 );
-assert.deepStrictEqual(settle.data.adsResource[1].infos, []);
-assert.deepStrictEqual(settle.data.adsResource[2], settleInput.data.adsResource[2]);
+assert.strictEqual(settle.data.adsResource.length, 1, "empty settlement ad shells must be removed");
 assert.deepStrictEqual(settle.data.adsMission, settleInput.data.adsMission);
 assert.deepStrictEqual(settle.data.payStatus, settleInput.data.payStatus);
 assert.deepStrictEqual(settle.data.receipt, settleInput.data.receipt);
+
+const shellOnlyInput = fixture("settle.json");
+shellOnlyInput.data.adsResource[0].infos = [[shellOnlyInput.data.adsResource[0].infos[0][0]]];
+const shellOnlyOutput = execute(settleUrl, JSON.stringify(shellOnlyInput));
+assert.ok(shellOnlyOutput.body);
+const shellOnly = JSON.parse(shellOnlyOutput.body);
+assert.deepStrictEqual(shellOnly.data.adsResource, [], "an ad-only settlement response must leave no container");
+assert.deepStrictEqual(shellOnly.data.receipt, shellOnlyInput.data.receipt);
 
 const secondPass = execute(homeUrl, homeOutput.body);
 assert.strictEqual(secondPass.body, undefined, "the rewrite must be idempotent");
@@ -90,4 +97,4 @@ assert.strictEqual(adjacent.body, undefined, "adjacent settlement routes must no
 const malformed = execute(homeUrl, "{not-json");
 assert.strictEqual(malformed.body, undefined, "malformed JSON must fail open");
 
-console.log("PASS home hermes settle nested preserve-normal idempotent exact-url fail-open");
+console.log("PASS home hermes settle nested remove-shell preserve-normal idempotent exact-url fail-open");
