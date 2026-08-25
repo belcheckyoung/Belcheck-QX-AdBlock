@@ -1,64 +1,69 @@
 # Belcheck QX AdBlock
 
-一套以真实流量证据、低误伤和可回滚为原则的 Quantumult X 广告屏蔽项目。它既提供针对具体广告链路的独立规则与响应改写，也提供一份由作者最新自用配置最小脱敏而来的完整公开模板。
+**Quantumult X 公开配置 · 广告净化 · 应用分流 · 抓包验证 · 隐私脱敏**
 
-这个项目不追求“拦得越多越好”。每条自研规则都尽量限定在已确认的接口、字段、路径或素材主机；无法确认的数据保持原样放行。第三方通用规则通过原作者地址引用，不复制后改名，也不把别人的工作包装成自研成果。
+Update on 2026-08-25 · Public Config `2.5-public`
 
-## 直接使用完整公开配置
+Belcheck QX AdBlock 是一套可直接导入、也可拆分订阅的 Quantumult X 配置。它以作者的日常配置为基础，整合社区长期维护的分流与重写资源，并加入基于真实流量验证的低误伤广告模块。
 
-公开配置：[`Config/Belcheck-QX-Public.conf`](Config/Belcheck-QX-Public.conf)
+这里不追求“规则越多越好”。自研规则只处理已经确认的接口、字段、路径或素材主机；结构不明、响应异常或证据不足时保持原样放行。
 
-Raw 订阅地址：
+> [!IMPORTANT]
+> 公开配置不包含 VPN 节点、代理订阅、认证信息、CA 口令或证书容器。`[server_local]` 与 `[server_remote]` 有意保持为空，所有需要代理的策略默认回退为 `direct`。会员与功能增强模块来自第三方，使用条件、兼容性和账户风险以原作者说明为准。
+
+## 1️⃣ Quantumult X 完整公开配置
+
+| 项目 | 说明 |
+| --- | --- |
+| 配置文件 | [`Config/Belcheck-QX-Public.conf`](Config/Belcheck-QX-Public.conf) |
+| 更新时间 | 2026-08-25 |
+| 默认网络 | 无代理节点，全部策略可回退为 `direct` |
+| 主要功能 | 广告与隐私规则、应用分流、会员模块、网页优化、功能增强、BoxJS、流媒体查询 |
+| 隐私状态 | 已移除节点、订阅、凭据、CA 与真实抓包数据 |
+
+**Raw 配置地址：**
 
 ```text
 https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Config/Belcheck-QX-Public.conf
 ```
 
-使用方法：
+### 导入方法
 
-1. 在 Quantumult X 的配置文件页面通过上述 Raw 地址下载配置，并将其设为当前配置。
-2. 更新全部远程资源后，重新连接 Quantumult X。
-3. 需要响应重写时，在 Quantumult X 中生成自己的 CA，安装并完全信任；公开配置不携带任何证书或口令。
-4. 彻底关闭再打开目标 App，避免旧响应和页面缓存影响判断。
+1. 打开 Quantumult X，进入右下角风车/三角按钮下的配置文件页面。
+2. 通过上面的 Raw 地址下载配置，并将其设为当前配置。
+3. 更新全部远程资源，重新连接 Quantumult X。
+4. 需要响应重写时，在 Quantumult X 中生成自己的 CA，并在 iOS 中安装、完全信任。
+5. 彻底关闭再打开目标 App，避免旧响应或页面缓存影响结果。
 
-这份模板可以在没有代理节点的情况下直接加载：`[server_local]` 与 `[server_remote]` 有意保持为空，国外流量、AI、Telegram、YouTube、Netflix 等策略默认回退为 `direct`。如需代理，请只在自己的设备中添加节点或订阅，再按需调整策略；不要把私人配置回传到公共仓库。
+如果需要使用自己的代理，请只在本机补充节点或订阅，再调整“国外流量”“AI 服务”“Telegram”“YouTube”“Netflix”等策略。不要把补充后的私人配置提交到公开仓库。
 
-会员解锁、广告净化、网页优化和功能增强模块均按作者自用配置保留。它们来自第三方、可独立启停，默认状态以配置文件为准。使用前请阅读对应作者说明，并自行判断服务条款、地区规则、兼容性和账户风险。
+## 2️⃣ 这份配置包含什么
 
-## 项目组成
+| 类别 | 主要内容 | 来源 | 默认状态 |
+| --- | --- | --- | --- |
+| 自研广告模块 | 美团单车、小红书首页、美团 App、微信小程序素材 | Belcheck | 开启 |
+| 广告与隐私 | Advertising、Privacy、Hijacking | blackmatrix7 | 开启 |
+| 会员模块 | 哔哩广告净化 Lite、Spotify、墨鱼专属 VIP | ddgksf2013、app2smile | 开启 |
+| 广告净化 | 开屏、彩云、知乎、YouTube、微博、喜马拉雅、高德、网易云、闲鱼等 | 多位社区作者 | 混合 |
+| 网页优化 | Safari 超级搜索、豆瓣观影、Google 重定向、CAPTCHA 兼容 | ddgksf2013、NobyDa | 混合 |
+| 功能增强 | 小红书、百度网盘、微信 URL、Apple 定位与天气服务 | ddgksf2013、zZPiglet、NSRingo | 混合 |
+| 应用分流 | 国内应用、AI、流媒体、Apple、国际流量与中国 ASN | blackmatrix7 等 | 开启 |
+| 工具 | 资源解析、流媒体查询、节点信息、BoxJS | KOP-XIAO、ddgksf2013、Chavyleung | 混合 |
 
-### 自研低误伤模块
+“混合”表示部分资源默认关闭，具体以公开配置中的 `enabled=true/false` 为准。
 
-#### 美团单车微信小程序
+## 3️⃣ 自研低误伤模块
 
-- 精确改写首页、Hermes 资源与结算页三个 JSON 接口。
-- 删除腾讯微信广告及非 `MOBIKE` 广告策略项。
-- 支持结算页 `adsResource[].infos` 的嵌套广告分组。
-- 确认广告后同时移除已空的广告父容器，减少黑色弹窗或空白占位。
-- 保留骑行、结算、支付数据和 `MOBIKE` 自营内容。
+| 模块 | 处理范围 | 不会主动处理 |
+| --- | --- | --- |
+| 美团单车微信小程序 | 首页、Hermes 资源与结算页三个精确 JSON 接口；删除明确微信广告与非 `MOBIKE` 广告策略 | 骑行、结算、支付数据与 `MOBIKE` 自营内容 |
+| 小红书首页信息流 | `rec.xiaohongshu.com/api/sns/v6/homefeed` 中带强广告标记的直接数组项 | 普通笔记、直播、分页字段、未知结构与异常响应 |
+| 美团 App 广告素材 | `p0/p1.meituan.net` 下已经确认的 `/adunion/` 图片路径 | 共享 CDN 的其他商家、商品、评价和频道素材 |
+| 微信小程序广告素材 | 两个抓包确认的微信小程序广告素材主机 | 整个 `wxs.qq.com`、微信正文、头像与公共 CDN |
 
-#### 小红书 App
+### 只安装自研模块
 
-- 仅处理 `rec.xiaohongshu.com/api/sns/v6/homefeed`。
-- 只删除带有 `is_ads=true`、`model_type=advertisement`，或 `ads_info.ads_id` / `ads_info.ads_type` 强标记的直接数组项。
-- 普通笔记、直播卡片、分页字段、未知结构及异常响应保持不变。
-
-#### 美团 App
-
-- 仅拒绝 `p0.meituan.net`、`p1.meituan.net` 下的 `/adunion/` 素材请求。
-- 不封禁共享 CDN 整域，也不扩展成整个 `meituan.net` 拦截。
-- 当前只处理已确认素材，不虚构未捕获的广告卡片字段。
-
-### 公开配置整合
-
-- `blackmatrix7/ios_rule_script` 的广告、隐私、反劫持、国内应用、AI 服务、流媒体及全球分流规则。
-- `ddgksf2013` 维护的广告净化、开屏处理、网页优化、功能增强与会员模块。
-- 资源解析、流媒体查询、VVebo、BoxJS、图标及少量补充规则。
-- localhost、本地网段、DNS、MitM hostname 和策略组等完整配置结构。
-
-## 只安装自研模块
-
-已有自己的 Quantumult X 配置时，不必替换整份配置。在 `[rewrite_remote]` 中加入：
+已有自己的 Quantumult X 配置时，不必替换完整配置。在 `[rewrite_remote]` 中加入：
 
 ```ini
 https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite/MeituanBikeWeChatAds.snippet, tag=美团单车微信广告清理, update-interval=86400, opt-parser=false, enabled=true
@@ -66,74 +71,103 @@ https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite
 https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite/MeituanAppAdMedia.snippet, tag=美团App广告素材清理, update-interval=86400, opt-parser=false, enabled=true
 ```
 
-在 `[filter_remote]` 中加入微信广告素材兜底：
+在 `[filter_remote]` 中加入：
 
 ```ini
-https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Filters/WeChatMiniProgramAds.list, tag=微信广告素材, force-policy=reject, update-interval=86400, opt-parser=false, enabled=true
+https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Filters/WeChatMiniProgramAds.list, tag=微信小程序广告素材, force-policy=reject, update-interval=86400, opt-parser=false, enabled=true
 ```
 
-随后确认 Rewrite 与 MitM 已启用、CA 已安装并完全信任、远程资源已经更新。不要同时加载会改写同一小红书 `homefeed` 接口的其他模块。
+随后确认 Rewrite 与 MitM 已开启、CA 已正确安装、远程资源已经更新。不要同时加载会改写同一小红书 `homefeed` 接口的其他模块。
 
-## 设计原则
+## 4️⃣ 第三方复写与功能模块
 
-- **证据优先**：自研规则来自抓包与界面对照，不从空响应或未知字段猜测广告结构。
-- **最小匹配**：优先使用精确接口、路径、强广告字段和已验证素材主机。
-- **异常放行**：JSON 解析失败、结构变化或非目标请求均原样返回。
-- **独立启停**：不同 App 的规则拆分为独立模块，出现兼容问题时可单独关闭。
-- **不提交真实数据**：测试数据全部人工合成；真实请求、响应、标识符和素材不进入仓库。
+公开配置保留了作者自用配置中不涉及个人隐私的第三方模块。这里只列出实际引用的资源，不把未收录模块写成项目能力。
 
-## 证据边界
+### 会员与广告净化
 
-- 美团单车结算响应曾在两个嵌套分组中明确下发腾讯微信弹窗与视频广告项，因此规则只扩展到对应精确接口与广告容器。
-- 小红书样本包含 12 次首页响应、116 个信息流条目，其中 1 个带完整广告结构；普通笔记与直播条目不具备该结构。
-- 美团 App 样本中，`p0/p1` 的 56 次素材请求有 6 次位于 `/adunion/`，对应 4 个广告创意；其他约 50 次正常素材位于不同路径，因此不能整域封禁。
-- 小红书开屏、广告资源和广告行为接口在样本中为空响应，没有据此编写未知 JSON 结构。
-- 埋点、会员、支付、消息、HTTPDNS 与风控请求不自动等同于广告，不属于当前自研删除范围。
+| 功能 | 主要维护者或原作者 | 默认 |
+| --- | --- | --- |
+| 哔哩广告净化 Lite | ddgksf2013 | 开启 |
+| Spotify 会员模块 | app2smile | 开启 |
+| 墨鱼专属 VIP | ddgksf2013 | 开启 |
+| 墨鱼去开屏 2.0 | ddgksf2013 等 | 开启 |
+| 彩云天气、知乎、微博、喜马拉雅、高德、网易云、闲鱼净化 | ddgksf2013 及对应原作者 | 开启 |
+| YouTube 广告处理 | DivineEngine、app2smile、Maasea、VirgilClyne | 开启 |
+| 微信小程序净化 | ddgksf2013 | 关闭 |
+| 滴滴净化 | ZenmoFeiShi | 关闭 |
+| Adblock4limbo 网页净化 | limbopro | 关闭 |
 
-这些数字用于说明规则边界。真实抓包、请求头、账户标识、设备信息和位置数据均不公开。
+### 网页优化与功能增强
 
-## 文件结构
+| 功能 | 主要维护者或原作者 | 默认 |
+| --- | --- | --- |
+| Safari 超级搜索、豆瓣观影、Google 重定向 | ddgksf2013 | 开启 |
+| Google CAPTCHA 兼容 | NobyDa | 关闭 |
+| 小红书净化与去水印、百度网盘净化 | ddgksf2013 | 开启 |
+| 微信 URL 解锁 | zZPiglet，经 ddgksf2013 整理 | 开启 |
+| Apple 定位服务、WeatherKit 增强 | NSRingo | 关闭 |
+| VVebo 时间线重写 | bin64/Scripts | 开启 |
+| BoxJS | Chavyleung | 关闭 |
 
-- `Config/Belcheck-QX-Public.conf`：可直接导入的完整脱敏配置。
-- `Scripts/`：自研响应过滤实现。
-- `Rewrite/`：可独立启停的 Quantumult X 远程模块。
-- `Filters/`：抓包确认的精确素材主机规则。
-- `Tests/`：人工合成回归测试与公开配置隐私检查。
-- `Tools/secret-scan.sh`：当前文件和完整 Git 历史的敏感内容检查。
-- `THIRD_PARTY.md`：第三方资源来源、边界和完整致谢。
+第三方模块通过原始地址加载，不复制后改名，也不作为本项目自研成果。上游更新可能改变功能和风险；重要环境建议先审阅资源内容，再决定是否开启。
 
-## 验证
+## 5️⃣ Quantumult X 分流
 
-仓库测试不需要安装第三方依赖：
+| 分流类别 | 覆盖内容 | 策略 |
+| --- | --- | --- |
+| 广告与隐私 | Advertising、Privacy、Hijacking | `广告拦截` |
+| Apple 服务 | Apple 域名与服务 | `苹果服务` |
+| 国内应用 | 视频、社交、电商、出行、音乐、资讯、金融、工具、游戏与大厂生态 | `国内流量` |
+| AI 与开发 | OpenAI、Claude、Gemini、GitHub、Developer | `AI服务` |
+| 特定服务 | Telegram、YouTube、Netflix | 同名策略组 |
+| 国际流量 | Global 与 RuleGo Proxy 规则 | `国外流量` |
+| 国内 IP 兜底 | 中国 ASN | `国内流量` |
+
+分流主体来自 [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script)，另有 ACL4SSR、ConnersHua 与 VirgilClyne 等项目的补充规则。公开版没有 VPN 信息，因此这些策略当前均可安全回退为直连。
+
+## 6️⃣ 使用提醒
+
+- 更新配置后先更新远程资源，再重连 Quantumult X 并重启目标 App。
+- 同一接口不要同时加载多个响应重写，否则可能重复修改或互相覆盖。
+- 出现登录、图片、支付、评论或页面异常时，先单独关闭最近启用的模块。
+- MitM 可能触发证书固定或兼容问题；不要共享自己的 CA、口令或证书容器。
+- 素材被拒绝后仍可能留下文字卡片或空白占位，这不等于规则没有生效。
+- 会员与功能增强模块不属于自研模块，请自行判断服务条款、地区规则和账户风险。
+- 分享时请保留仓库链接与原作者署名，不要重新打包转载上游规则文件。
+
+## 7️⃣ 验证、证据与隐私
+
+### 已公开的证据边界
+
+- 美团单车结算响应在两个嵌套分组中明确出现微信弹窗与视频广告项，因此只扩展对应精确接口和广告容器。
+- 小红书样本包含 12 次首页响应、116 个信息流条目，其中 1 个带完整广告结构。
+- 美团 App 样本的 56 次素材请求中，6 次位于 `/adunion/`，对应 4 个广告创意；其他约 50 次正常素材证明整域封禁会产生误伤。
+- 空响应、未知 JSON、埋点、会员、支付、消息、HTTPDNS 与风控请求不会自动被认定为广告。
+
+### 自动化检查
 
 ```bash
 npm test
 npm run scan:secrets
 ```
 
-测试覆盖目标 URL、广告对象删除、正常内容保留、路径误伤边界、重复执行、异常放行，以及公开配置中的空节点段、直连回退、会员模块保留和敏感信息禁入。自动化测试不能替代 Quantumult X 解析器、CA、MitM 和目标 App 的实机验证。
+测试覆盖广告对象删除、正常内容保留、精确 URL 与路径、重复执行、异常放行，以及公开配置中的空节点段、直连回退、会员模块保留和敏感信息禁入。仓库还会扫描完整 Git 历史，避免通过“提交后再删除”隐藏凭据。
 
-## 隐私与安全
+### 不会公开的内容
 
-公开配置保留了所有不涉及个人隐私的原配置内容，只移除了：
+- 代理节点、订阅地址、用户名、密码、UUID 与认证令牌。
+- CA 口令、证书容器、私钥和设备描述文件。
+- 网络活动导出、HAR、PCAP、真实请求头与响应正文。
+- 账户、设备、订单、会话、位置与其他个人标识。
 
-- 本地代理节点及其认证信息。
-- 远程订阅地址及订阅说明。
-- CA 口令、证书容器和其他私钥材料。
-- 删除节点后不再成立的测速策略与 `proxy` 引用。
+详细安全边界见 [`SECURITY.md`](SECURITY.md)。
 
-请勿在 Issue、Pull Request、测试数据或讨论中上传私人配置、节点、订阅、证书、网络活动导出、HAR、PCAP、真实请求响应、账户标识、设备标识或精确位置。详见 [`SECURITY.md`](SECURITY.md)。
+## 8️⃣ 特别感谢
 
-## 已知限制
+特别感谢以下作者与项目长期公开维护 Quantumult X 规则、脚本、图标和工具，排名不分先后：
 
-- 第三方远程资源可能随时更新、迁移或停止维护；启用前应审阅上游说明，重要环境建议固定到已审计版本。
-- 不同模块可能命中同一接口或 hostname。出现登录、图片、支付、评论或页面异常时，应先单独停用最近启用的模块。
-- MitM 会增加证书固定和兼容风险；公开配置不会替用户生成、分发或备份 CA。
-- 素材拒绝可能留下文字卡片或空白占位；没有可靠结构化响应时，不会为了“看起来更干净”而扩大拦截范围。
-- 无代理节点的公开配置不会提供跨地区访问或流媒体解锁能力，相关策略只会直连。
+[@blackmatrix7](https://github.com/blackmatrix7) · [@ddgksf2013](https://github.com/ddgksf2013) · [@KOP-XIAO](https://github.com/KOP-XIAO) · [@app2smile](https://github.com/app2smile) · [@DivineEngine](https://github.com/DivineEngine) · [@Maasea](https://github.com/Maasea) · [@VirgilClyne](https://github.com/VirgilClyne) · [@NobyDa](https://github.com/NobyDa) · [@ZenmoFeiShi](https://github.com/ZenmoFeiShi) · [@limbopro](https://github.com/limbopro) · [@NSRingo](https://github.com/NSRingo) · [@Chavyleung](https://github.com/chavyleung) · [@Koolson](https://github.com/Koolson) · [@Orz-3](https://github.com/Orz-3) · [ACL4SSR](https://github.com/ACL4SSR/ACL4SSR) · [ConnersHua](https://github.com/ConnersHua) · [zZPiglet](https://github.com/zZPiglet)
 
-## 致谢
-
-特别感谢 [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script) 对分流规则体系的长期维护，以及 [ddgksf2013](https://github.com/ddgksf2013) 对 Quantumult X 广告净化、网页优化与功能模块的持续整理。也感谢配置中每一项资源的原作者；完整名单与使用边界见 [`THIRD_PARTY.md`](THIRD_PARTY.md)。
+完整的资源来源、引用边界和维护者说明见 [`THIRD_PARTY.md`](THIRD_PARTY.md)。如有署名遗漏或归属变化，欢迎提交 Issue 指正。
 
 本项目与 Quantumult X、上述作者及相关服务没有隶属或官方合作关系。

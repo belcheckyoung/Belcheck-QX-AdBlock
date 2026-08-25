@@ -12,9 +12,11 @@
 - [KOP-XIAO/QuantumultX](https://github.com/KOP-XIAO/QuantumultX)：资源解析器与流媒体查询工具。
 - [bin64/Scripts](https://github.com/bin64/Scripts)：VVebo 请求与响应重写。
 - [app2smile/rules](https://github.com/app2smile/rules)：Spotify 可选模块。
+- [DivineEngine](https://github.com/DivineEngine)、[Maasea](https://github.com/Maasea)、[app2smile](https://github.com/app2smile) 与 [VirgilClyne](https://github.com/VirgilClyne)：当前 YouTube 广告处理资源头信息列出的原始作者。
 - [ZenmoFeiShi/Qx](https://github.com/ZenmoFeiShi/Qx)：滴滴可选重写与分流。
 - [limbopro/Adblock4limbo](https://github.com/limbopro/Adblock4limbo)：网页净化模块。
 - [NobyDa/Script](https://github.com/NobyDa/Script)：Google CAPTCHA 兼容模块。
+- [zZPiglet](https://github.com/zZPiglet)：微信 URL 解锁功能的原作者。
 - [NSRingo](https://github.com/NSRingo)：Apple 定位服务与 WeatherKit 可选增强。
 - [ACL4SSR/ACL4SSR](https://github.com/ACL4SSR/ACL4SSR)：微信分流补充。
 - [ConnersHua/RuleGo](https://github.com/ConnersHua/RuleGo)：全球加速规则。
