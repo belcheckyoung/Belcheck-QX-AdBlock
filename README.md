@@ -42,6 +42,11 @@ https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Config/
 ```
 
 ### 导入方法
+<img width="1576" height="901" alt="image" src="https://github.com/user-attachments/assets/99624432-06fc-430c-9989-3fd8f87bd54a" />
+<img width="1858" height="846" alt="image" src="https://github.com/user-attachments/assets/1a87dd3a-c015-4c4f-8a70-f7821aedcab6" />
+<img width="1851" height="862" alt="image" src="https://github.com/user-attachments/assets/386e0ef9-fea7-4758-9f10-3d0f6adf38e9" />
+<img width="1503" height="841" alt="image" src="https://github.com/user-attachments/assets/981fce8c-1345-4485-a8b3-a269f13b2c19" />
+
 
 1. 打开 Quantumult X，进入右下角风车/三角按钮下的配置文件页面。
 2. 通过上面的 Raw 地址下载配置，并将其设为当前配置。
