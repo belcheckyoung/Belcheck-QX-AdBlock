@@ -80,11 +80,16 @@ https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Config/
 | 美团 App 广告素材 | `p0/p1.meituan.net` 下已经确认的 `/adunion/` 图片路径 | 共享 CDN 的其他商家、商品、评价和频道素材 |
 | 微信小程序广告素材 | 两个抓包确认的微信小程序广告素材主机 | 整个 `wxs.qq.com`、微信正文、头像与公共 CDN |
 
+### 菜鸟界面与广告净化（新增）
+
+[安装说明与处理范围](Docs/CaiNiaoUIClean.md)：清理已识别的首页快捷栏、个人页卡片、底部中间入口和推广容器。基于真实响应回放验证；顶部“去寄件／物换物”暂未处理，手机界面与空白占位效果待验收。
+
 ### 只安装自研模块
 
 已有自己的 Quantumult X 配置时，不必替换完整配置。在 `[rewrite_remote]` 中加入：
 
 ```ini
+https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite/CaiNiaoUIClean.snippet, tag=菜鸟界面与广告净化, update-interval=86400, opt-parser=false, enabled=true
 https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite/MeituanBikeWeChatAds.snippet, tag=美团单车微信广告清理, update-interval=86400, opt-parser=false, enabled=true
 https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite/XiaohongshuHomeFeedAds.snippet, tag=小红书首页广告清理, update-interval=86400, opt-parser=false, enabled=true
 https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite/MeituanAppAdMedia.snippet, tag=美团App广告素材清理, update-interval=86400, opt-parser=false, enabled=true

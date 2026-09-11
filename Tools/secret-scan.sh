@@ -12,6 +12,11 @@ import subprocess
 import sys
 
 allowed = {
+    "Scripts/CaiNiaoUIClean.js",
+    "Rewrite/CaiNiaoUIClean.snippet",
+    "Tests/CaiNiaoUIClean.test.js",
+    "Docs/CaiNiaoUIClean.md",
+
     ".github/workflows/test.yml",
     ".gitignore",
     "CHANGELOG.md",
@@ -89,6 +94,14 @@ patterns = [
     ("capture-pii", re.compile(r"\b(?:latitude|longitude|locationTime|accuracy|openid|unionid|session[_-]?key|wxa_session|order[_-]?id|device[_-]?id)\b", re.I)),
 ]
 
+# These four existing README URLs are public GitHub image assets, not credentials.
+public_readme_assets = {
+    "https://github.com/user-attachments/assets/99624432-06fc-430c-9989-3fd8f87bd54a",
+    "https://github.com/user-attachments/assets/1a87dd3a-c015-4c4f-8a70-f7821aedcab6",
+    "https://github.com/user-attachments/assets/386e0ef9-fea7-4758-9f10-3d0f6adf38e9",
+    "https://github.com/user-attachments/assets/981fce8c-1345-4485-a8b3-a269f13b2c19",
+}
+
 skip_content_scan = {"Tools/secret-scan.sh"}
 findings = set()
 
@@ -109,7 +122,11 @@ def scan_text(name, text, origin):
             findings.add(("qx-active-server-section", origin, name, number))
 
         for rule_id, pattern in patterns:
-            if pattern.search(line):
+            candidate = line
+            if rule_id == "uuid-like" and name == "README.md":
+                for asset_url in public_readme_assets:
+                    candidate = candidate.replace(asset_url, "[public-image]")
+            if pattern.search(candidate):
                 findings.add((rule_id, origin, name, number))
 
 

@@ -1,0 +1,9 @@
+#!name=菜鸟界面与广告净化
+#!desc=基于实际响应清理快捷栏、个人页卡片、底部中间入口和推广容器；手机界面效果待验证
+#!author=Belcheck
+#!homepage=https://github.com/belcheckyoung/Belcheck-QX-AdBlock
+
+^https?:\/\/(?:[a-zA-Z0-9-]+\.)+cainiao\.com\/gw\/mtop\.cainiao\.(?:app\.e2e\.engine\.page\.fetch(?:\.cn)?|nbcps\.presentation\.fetch\.cn)(?:\/|\?|$) url script-request-header https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Scripts/CaiNiaoUIClean.js
+^https?:\/\/(?:[a-zA-Z0-9-]+\.)+cainiao\.com\/gw\/mtop\.cainiao\.(?:app\.e2e\.engine\.page\.fetch(?:\.cn)?|nbcps\.presentation\.fetch\.cn)(?:\/|\?|$) url script-response-body https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Scripts/CaiNiaoUIClean.js
+^https?:\/\/p(?:3|26)-be-pack-sign\.pglstatp-toutiao\.com\/ad\.union\.api\/ url reject-img
+hostname = cn-acs.m.cainiao.com, e2e-mtop.cainiao.com, nbcps-mtop.cainiao.com, p3-be-pack-sign.pglstatp-toutiao.com, p26-be-pack-sign.pglstatp-toutiao.com

@@ -25,3 +25,7 @@
 - [Koolson/Qure](https://github.com/Koolson/Qure) 与 [Orz-3/mini](https://github.com/Orz-3/mini)：策略与模块图标。
 
 这些资源由 Quantumult X 在使用时从上游地址获取，不作为本仓库代码重新打包。第三方资源的许可证、署名要求、免责声明、功能边界和更新节奏均由各自作者决定。本项目与 Quantumult X、上述作者及相关服务没有隶属或官方合作关系。
+
+## 菜鸟净化的接口线索
+
+`Scripts/CaiNiaoUIClean.js` 的早期接口定位参考 [ddgksf2013/Scripts/cainiao_json.js](https://github.com/ddgksf2013/Scripts/blob/master/cainiao_json.js)。本模块依据用户提供的实际响应重新实现结构识别、保留条件与本地测试，感谢上游提供线索。

@@ -27,6 +27,11 @@
 !/Tools/secret-scan.sh
 !/.github/workflows/test.yml
 
+!/Scripts/CaiNiaoUIClean.js
+!/Rewrite/CaiNiaoUIClean.snippet
+!/Tests/CaiNiaoUIClean.test.js
+!/Docs/CaiNiaoUIClean.md
+
 # Explicitly forbidden private or captured material.
 /sources/
 /attachments/
