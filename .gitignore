@@ -32,6 +32,11 @@
 !/Tests/CaiNiaoUIClean.test.js
 !/Docs/CaiNiaoUIClean.md
 
+!/Scripts/FengChaoAdClean.js
+!/Rewrite/FengChaoAdClean.snippet
+!/Tests/FengChaoAdClean.test.js
+!/Docs/FengChaoAdClean.md
+
 # Explicitly forbidden private or captured material.
 /sources/
 /attachments/

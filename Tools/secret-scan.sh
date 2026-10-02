@@ -12,6 +12,10 @@ import subprocess
 import sys
 
 allowed = {
+    "Scripts/FengChaoAdClean.js",
+    "Rewrite/FengChaoAdClean.snippet",
+    "Tests/FengChaoAdClean.test.js",
+    "Docs/FengChaoAdClean.md",
     "Scripts/CaiNiaoUIClean.js",
     "Rewrite/CaiNiaoUIClean.snippet",
     "Tests/CaiNiaoUIClean.test.js",

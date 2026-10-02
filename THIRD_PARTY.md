@@ -29,3 +29,7 @@
 ## 菜鸟净化的接口线索
 
 `Scripts/CaiNiaoUIClean.js` 的早期接口定位参考 [ddgksf2013/Scripts/cainiao_json.js](https://github.com/ddgksf2013/Scripts/blob/master/cainiao_json.js)。本模块依据用户提供的实际响应重新实现结构识别、保留条件与本地测试，感谢上游提供线索。
+
+## 丰巢广告的接口线索
+
+丰巢响应清理依据本次网络记录独立实现。补充 RTM 专用广告路径的定位参考 [fmz200/wool_scripts](https://github.com/fmz200/wool_scripts/blob/main/Loon/plugin/blockAds.plugin)；丰巢 DSP 域名及页面配置线索也参考 [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script/blob/master/rewrite/QuantumultX/AllInOne/AllInOne.conf)。未将上游整个文件复制或改名发布。感谢上游维护者。
