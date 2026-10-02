@@ -4,8 +4,8 @@
 #!homepage=https://github.com/belcheckyoung/Belcheck-QX-AdBlock
 
 # Capture-backed APIs. Keep successful envelopes instead of triggering failed-request fallbacks.
-^https?:\/\/(?:dsp\.fcbox\.com\/adSearch\/(?:get|getMulti)|webchatapp\.fcbox\.com\/(?:commerce\/mobile\/appConfig\/getPositions|fcboxactivityweb\/api\/v2\/clientPage\/getUserClientPageInfo|post\/suggestion\/query))\/?(?:\?.*)?$ url script-request-header https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Scripts/FengChaoAdClean.js
-^https?:\/\/(?:dsp\.fcbox\.com\/adSearch\/(?:get|getMulti)|webchatapp\.fcbox\.com\/(?:commerce\/mobile\/appConfig\/getPositions|fcboxactivityweb\/api\/v2\/clientPage\/getUserClientPageInfo|post\/suggestion\/query))\/?(?:\?.*)?$ url script-response-body https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Scripts/FengChaoAdClean.js
+^https?:\/\/(?:dsp\.fcbox\.com\/adSearch\/(?:get|getMulti)|webchatapp\.fcbox\.com\/(?:commerce\/mobile\/appConfig\/getPositions|fcboxactivityweb\/api\/v2\/clientPage\/getUserClientPageInfo|post\/suggestion\/query))\/?(?:\?.*)?$ url script-request-header https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/afc4ec8ed834ed053f71312fbb62242a1a2ae6a2/Scripts/FengChaoAdClean.js
+^https?:\/\/(?:dsp\.fcbox\.com\/adSearch\/(?:get|getMulti)|webchatapp\.fcbox\.com\/(?:commerce\/mobile\/appConfig\/getPositions|fcboxactivityweb\/api\/v2\/clientPage\/getUserClientPageInfo|post\/suggestion\/query))\/?(?:\?.*)?$ url script-response-body https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/afc4ec8ed834ed053f71312fbb62242a1a2ae6a2/Scripts/FengChaoAdClean.js
 ^https?:\/\/dsp\.fcbox\.com\/adTracker\/stat\/?(?:\?.*)?$ url reject-200
 
 # Dedicated ad-media host observed in the capture. No shared consumerapp CDN block.
