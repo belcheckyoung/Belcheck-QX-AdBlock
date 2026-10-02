@@ -16,6 +16,8 @@ https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite
 
 同一接口若已经命中其他模块的整域拒绝规则，请关闭冲突规则或调整顺序，使本模块响应清理规则先命中；否则无广告成功响应和广告开关不会生效。不要关闭全部原有广告模块。
 
+旧版若显示取件推广素材规则 `Invalid Line`，更新本资源。修正版采用纯 ASCII 正则，按同一主机、目录和唯一素材后缀匹配编码／未编码 URL；手机更新是否成功仍需在设备确认。若仍读取旧版，可临时使用当前修复提交的固定版本订阅地址。
+
 ## 处理范围
 
 | 接口或内容 | 处理 | 证据 |
@@ -26,7 +28,7 @@ https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite
 | `webchatapp.fcbox.com/post/suggestion/query` | 清空已识别的会员推广 `top` 容器及半屏购买入口，保留其他建议位 | 记录 124、137、135 |
 | `dsp.fcbox.com/adTracker/stat` | 广告曝光／点击上报返回空 200 | 记录 120、127 |
 | `ad-dsp-1251779293.file.myqcloud.com` | 拒绝专用广告素材 | 记录 122，广告响应也引用该主机 |
-| 共享 CDN 上的取件会员横条 | 只拒绝记录 137 的精确素材路径 | 记录 137；其他共享 CDN 图片保留 |
+| 共享 CDN 上的取件会员横条 | 限定记录 137 的主机、目录和唯一素材后缀 | 记录 137；其他共享 CDN 图片保留 |
 | `rtm.fcbox.com/rtsWeb/api/resource/ad/queryAd` | 返回空 JSON 字典，提前拦截专用广告接口 | 上游接口线索；本次未出现，不能当作已验证开屏接口 |
 
 `wxAdsFlag`、`fcDspFlag`、`interstitialErrSwitch` 在记录里是字符串。本模块将已存在的 `"true"` 改为 `"false"`，不补造缺失字段；布尔类型变体也保持原类型。依据字段名推断它们控制微信广告、丰巢广告和插屏异常处理，具体前端行为没有文档或设备验证。

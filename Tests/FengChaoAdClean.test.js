@@ -197,6 +197,9 @@ execute({$request:{url:SUGGESTION,headers}, $response:throwingResponse});
 const snippet = fs.readFileSync(path.join(__dirname, '../Rewrite/FengChaoAdClean.snippet'), 'utf8');
 const rules = snippet.split('\n').filter(line => line.startsWith('^')).map(line => line.split(' url '));
 assert.equal(rules.length, 6);
+// Match encoded and decoded URLs without literal Unicode in the resource grammar.
+// This is a compatibility regression guard, not a native Quantumult X parser test.
+for (const [pattern] of rules) assert(!/[^\x00-\x7f]/.test(pattern), 'active rewrite patterns must be ASCII');
 const scriptRules = rules.filter(([, action]) => action.startsWith('script-'));
 assert.equal(scriptRules.length, 2);
 assert(scriptRules.some(([, action]) => action.startsWith('script-request-header ')));
@@ -225,7 +228,9 @@ assert(!media.test('https://ad-dsp-1251779293.file.myqcloud.com.example.invalid/
 const memberImageBase = 'https://consumerapp-1251779293.file.myqcloud.com/patch/202512/';
 const memberImage = ruleFor('reject-img', memberImageBase + '%E5%8F%96%E4%BB%B6_4mdfd5fjvxf.png');
 assert(memberImage.test(memberImageBase + '取件_4mdfd5fjvxf.png?synthetic=1'));
+assert(memberImage.test(memberImageBase + '%e5%8f%96%e4%bb%b6_4mdfd5fjvxf.png'));
 for (const route of [memberImageBase + 'ordinary.png', memberImageBase + '取件_other.png', memberImageBase + '取件_4mdfd5fjvxf.png.extra']) assert(!memberImage.test(route));
+for (const route of [memberImageBase.replace('/202512/', '/202601/') + '取件_4mdfd5fjvxf.png', memberImageBase + 'extra/取件_4mdfd5fjvxf.png']) assert(!memberImage.test(route));
 const rtmBase = 'https://rtm.fcbox.com/rtsWeb/api/resource/ad/';
 const rtm = ruleFor('reject-dict', rtmBase + 'queryAd?synthetic=1');
 for (const route of [rtmBase + 'queryAdOther', rtmBase + 'queryAd/detail', 'https://rtm.fcbox.com/rtsWeb/api/order/query', 'https://rtm.fcbox.com/rtsWeb/api/resource/query', 'https://rtm.fcbox.com/ordinary', 'https://rtm.fcbox.com.example.invalid/rtsWeb/api/resource/ad/queryAd']) assert(!rtm.test(route));

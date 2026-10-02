@@ -10,7 +10,7 @@
 
 # Dedicated ad-media host observed in the capture. No shared consumerapp CDN block.
 ^https?:\/\/ad-dsp-1251779293\.file\.myqcloud\.com\/ url reject-img
-^https?:\/\/consumerapp-1251779293\.file\.myqcloud\.com\/patch\/202512\/(?:%E5%8F%96%E4%BB%B6|取件)_4mdfd5fjvxf\.png(?:\?.*)?$ url reject-img
+^https?:\/\/consumerapp-1251779293\.file\.myqcloud\.com\/patch\/202512\/[^/?]*_4mdfd5fjvxf\.png(?:\?.*)?$ url reject-img
 
 # Upstream ad-endpoint preventive coverage; not present in this capture and not splash-verified.
 ^https?:\/\/rtm\.fcbox\.com\/rtsWeb\/api\/resource\/ad\/queryAd\/?(?:\?.*)?$ url reject-dict
