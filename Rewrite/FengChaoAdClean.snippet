@@ -1,11 +1,11 @@
 #!name=丰巢小程序广告与推广净化
-#!desc=清空广告下发、关闭已识别广告开关、清理会员推广；包含未捕获开屏的预防接口，手机效果待验证
+#!desc=1.6.0 清理广告下发、首页会员头图、寄件推广与取件卡营销；独立开屏接口待定位，手机效果待验证
 #!author=Belcheck
 #!homepage=https://github.com/belcheckyoung/Belcheck-QX-AdBlock
 
 # Capture-backed APIs. Keep successful envelopes instead of triggering failed-request fallbacks.
-^https?:\/\/(?:dsp\.fcbox\.com\/adSearch\/(?:get|getMulti)|webchatapp\.fcbox\.com\/(?:commerce\/mobile\/appConfig\/getPositions|fcboxactivityweb\/api\/v2\/clientPage\/getUserClientPageInfo|post\/suggestion\/query))\/?(?:\?.*)?$ url script-request-header https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/afc4ec8ed834ed053f71312fbb62242a1a2ae6a2/Scripts/FengChaoAdClean.js
-^https?:\/\/(?:dsp\.fcbox\.com\/adSearch\/(?:get|getMulti)|webchatapp\.fcbox\.com\/(?:commerce\/mobile\/appConfig\/getPositions|fcboxactivityweb\/api\/v2\/clientPage\/getUserClientPageInfo|post\/suggestion\/query))\/?(?:\?.*)?$ url script-response-body https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/afc4ec8ed834ed053f71312fbb62242a1a2ae6a2/Scripts/FengChaoAdClean.js
+^https?:\/\/(?:dsp\.fcbox\.com\/adSearch\/(?:get|getMulti)|webchatapp\.fcbox\.com\/(?:commerce\/mobile\/appConfig\/getPositions|fcboxactivityweb\/api\/v2\/clientPage\/(?:getUserClientPageInfo|topImg|batchQueryClientPageConfigs|modulesAggregated|homePickUpCardMarketingAggregated)|post\/suggestion\/query))\/?(?:\?.*)?$ url script-request-header https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/80d0af3ca6a4b4fd09001739ca53069fc8331f76/Scripts/FengChaoAdClean.js
+^https?:\/\/(?:dsp\.fcbox\.com\/adSearch\/(?:get|getMulti)|webchatapp\.fcbox\.com\/(?:commerce\/mobile\/appConfig\/getPositions|fcboxactivityweb\/api\/v2\/clientPage\/(?:getUserClientPageInfo|topImg|batchQueryClientPageConfigs|modulesAggregated|homePickUpCardMarketingAggregated)|post\/suggestion\/query))\/?(?:\?.*)?$ url script-response-body https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/80d0af3ca6a4b4fd09001739ca53069fc8331f76/Scripts/FengChaoAdClean.js
 ^https?:\/\/dsp\.fcbox\.com\/adTracker\/stat\/?(?:\?.*)?$ url reject-200
 
 # Dedicated ad-media host observed in the capture. No shared consumerapp CDN block.
