@@ -86,7 +86,7 @@ https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Config/
 
 ### 丰巢小程序广告与推广净化（新增）
 
-[安装说明与处理范围](Docs/FengChaoAdClean.md)：处理已识别的广告下发、微信广告配置、会员推广与广告素材，并预防性拦截 RTM 专用广告路径。开屏广告未在本次记录出现，手机效果待验证。安装前检查并移除现有 `-*.fcbox.com` MitM 排除项。
+[安装说明与处理范围](Docs/FengChaoAdClean.md)：1.6.0 根据两次记录清理广告下发、微信广告配置、首页会员头图、寄件与取件卡营销、明确标注的首页广告模块，并预防性拦截 RTM 专用广告路径。用户反馈的独立开屏仍未从可读流量定位，手机效果待验证。安装前检查并移除现有 `-*.fcbox.com` MitM 排除项。
 
 ### 只安装自研模块
 

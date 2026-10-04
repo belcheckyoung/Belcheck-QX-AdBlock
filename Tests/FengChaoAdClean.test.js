@@ -10,7 +10,13 @@ const WEB = 'https://webchatapp.fcbox.com';
 const POSITIONS = WEB + '/commerce/mobile/appConfig/getPositions';
 const HOME = WEB + '/fcboxactivityweb/api/v2/clientPage/getUserClientPageInfo';
 const SUGGESTION = WEB + '/post/suggestion/query';
-const routes = [DSP + 'get', DSP + 'getMulti', POSITIONS, HOME, SUGGESTION];
+const PAGE_CONFIG = WEB + '/fcboxactivityweb/api/v2/clientPage/';
+const HEADER = PAGE_CONFIG + 'topImg';
+const BATCH = PAGE_CONFIG + 'batchQueryClientPageConfigs';
+const MODULES = PAGE_CONFIG + 'modulesAggregated';
+const PICK_MARKETING = PAGE_CONFIG + 'homePickUpCardMarketingAggregated';
+const VIP = '/uniDoraPick/pages/vip-center/vip';
+const routes = [DSP + 'get', DSP + 'getMulti', POSITIONS, HOME, SUGGESTION, HEADER, BATCH, MODULES, PICK_MARKETING];
 const clone = x => JSON.parse(JSON.stringify(x));
 const encoded = x => JSON.stringify(x);
 const run = (url, data, options) => clean(url, encoded(data), options);
@@ -138,6 +144,181 @@ for (const change of [{success:false}, {code:'failure'}, {data:[]}, {data:null}]
   unchanged(SUGGESTION, encoded(Object.assign(clone(suggestion), change)));
 }
 
+// New homepage resources retain their nested JSON-string contracts and ordinary settings.
+function configResponse(config) {
+  return {
+    success: true, code: '0', msg: 'synthetic ok',
+    data: {homePageConfig: encoded(config), ordinaryMetadata: {keep: true}},
+    keepRoot: 'synthetic'
+  };
+}
+function withConfig(input, config) {
+  const result = clone(input); result.data.homePageConfig = encoded(config); return result;
+}
+const directMemberLinks = [VIP, VIP + '?synthetic=1', VIP + '#synthetic'];
+const wrappedMemberLinks = [
+  '/pages/h5Page/h5Page?h5PageUrl=' + encodeURIComponent('https://edms.fcbox.com/staticResource/wechat/program/wechat_pick/pick-card.html?synthetic=1#/vipMarketing'),
+  '/pages/h5Page/h5Page?ordinary=synthetic&h5PageUrl=' + encodeURIComponent('https://edms.fcbox.com/staticResource/wechat/program/wechat_pick/pick-card.html?synthetic=a+b#/vipMarketing?synthetic=1')
+];
+const headConfig = {
+  showFridayFlag: false,
+  ordinaryHomeFeature: {enabled: true, text: 'synthetic'},
+  headImg: {imgUrl: 'https://example.invalid/member-header.png', link: VIP, iconName: 'synthetic member promotion'}
+};
+const header = configResponse(headConfig);
+for (const link of [...directMemberLinks, ...wrappedMemberLinks]) {
+  const variant = clone(headConfig); variant.headImg.link = link;
+  const input = configResponse(variant);
+  equalRewrite(HEADER, input, withConfig(input, Object.assign(clone(variant), {headImg: null})));
+  unchanged(HEADER, encoded(input), {hideHomeMarketing: false});
+}
+const ordinaryHeadLinks = [
+  '/pages/SendPackage/boxSend/index', VIP + 'Other', VIP + '/details',
+  'https://example.invalid' + VIP,
+  '/pages/h5Page/h5PageOther?h5PageUrl=' + encodeURIComponent('https://edms.fcbox.com/staticResource/wechat/program/wechat_pick/pick-card.html#/vipMarketing'),
+  '/pages/h5Page/h5Page?h5PageUrl=' + encodeURIComponent('https://edms.fcbox.com.example.invalid/staticResource/wechat/program/wechat_pick/pick-card.html#/vipMarketing'),
+  '/pages/h5Page/h5Page?h5PageUrl=' + encodeURIComponent('https://example.invalid/staticResource/wechat/program/wechat_pick/pick-card.html#/vipMarketing'),
+  '/pages/h5Page/h5Page?h5PageUrl=' + encodeURIComponent('https://edms.fcbox.com/staticResource/wechat/program/wechat_pick/ordinary.html#/vipMarketing'),
+  '/pages/h5Page/h5Page?h5PageUrl=' + encodeURIComponent('https://edms.fcbox.com/staticResource/wechat/program/wechat_pick/pick-card.html#/ordinary'),
+  '/pages/h5Page/h5Page?h5PageUrl=' + encodeURIComponent('https://edms.fcbox.com/staticResource/wechat/program/wechat_pick/pick-card.html#/vipMarketingOther'),
+  '/pages/h5Page/h5Page?url=' + encodeURIComponent('https://edms.fcbox.com/staticResource/wechat/program/wechat_pick/pick-card.html#/vipMarketing'),
+  '/pages/h5Page/h5Page?h5PageUrl=' + encodeURIComponent('https://edms.fcbox.com/bw/pick-card.html#/vipMarketing'),
+  '/pages/h5Page/h5Page?h5PageUrl=' + encodeURIComponent(encodeURIComponent('https://edms.fcbox.com/staticResource/wechat/program/wechat_pick/pick-card.html#/vipMarketing')),
+  wrappedMemberLinks[0] + '&h5PageUrl=' + encodeURIComponent('https://edms.fcbox.com/staticResource/wechat/program/wechat_pick/pick-card.html#/vipMarketing'),
+  wrappedMemberLinks[0] + '#ordinary',
+  '/pages/h5Page/h5Page?h5PageUrl=%ZZ',
+  '', null, {}
+];
+for (const link of ordinaryHeadLinks) {
+  const config = clone(headConfig); config.headImg.link = link;
+  unchanged(HEADER, encoded(configResponse(config)));
+}
+for (const imgUrl of ['', null, 1, {}]) {
+  const config = clone(headConfig); config.headImg.imgUrl = imgUrl;
+  unchanged(HEADER, encoded(configResponse(config)));
+}
+for (const headImg of [null, [], 'unknown']) {
+  const config = clone(headConfig); config.headImg = headImg;
+  unchanged(HEADER, encoded(configResponse(config)));
+}
+
+// A keyed batch contains a member card alongside normal shipping tools.
+const batch = {
+  success: true, code: 0, msg: 'synthetic ok',
+  data: {
+    type32: {homePageConfig: encoded({imgUrl: 'https://example.invalid/send-member.png', jumpUrl: VIP + '?synthetic=send'}), keep: 'member-card'},
+    type6: {homePageConfig: encoded({sendIcons: [{iconName:'synthetic pickup', link:'/pages/SendPackage/doorSend/index'}]}), keep: 'ordinary-send-tools'},
+    syntheticFutureType: {homePageConfig: '{', keep: 'unknown'}
+  },
+  keepRoot: true
+};
+const batchExpected = clone(batch); delete batchExpected.data.type32;
+equalRewrite(BATCH, batch, batchExpected);
+unchanged(BATCH, encoded(batch), {hideHomeMarketing: false});
+for (const jumpUrl of ordinaryHeadLinks) {
+  const variant = clone(batch);
+  variant.data.type32.homePageConfig = encoded({imgUrl:'https://example.invalid/member.png', jumpUrl});
+  unchanged(BATCH, encoded(variant));
+}
+for (const imgUrl of ['', null, 1, {}]) {
+  const variant = clone(batch); variant.data.type32.homePageConfig = encoded({imgUrl, jumpUrl:VIP});
+  unchanged(BATCH, encoded(variant));
+}
+for (const type32 of [null, [], 'unknown', {homePageConfig:'{'}, {homePageConfig:encoded([])}, {homePageConfig:{imgUrl:'https://example.invalid/member.png', jumpUrl:VIP}}]) {
+  const variant = clone(batch); variant.data.type32 = type32; unchanged(BATCH, encoded(variant));
+}
+
+// An explicitly named advertising module is removed without dropping service modules.
+const moduleConfig = {
+  moduleList: [
+    {moduleType:'m1', name:'synthetic life service', title:'synthetic services', contents:[{items:[{link:'/wash/pages/home/index', keep:true}]}]},
+    {moduleType:'m2', name:'banner模块', title:'广告', keep:'ad'},
+    {moduleType:'m1', name:'banner模块', title:'广告', keep:'ordinary-different-type'},
+    {moduleType:'m2', name:'banner模块', title:'普通服务', keep:'ordinary-different-title'},
+    {moduleType:'m2', name:'其他模块', title:'广告', keep:'unknown-different-name'},
+    {moduleType:'m3', name:'synthetic membership navigation', title:'synthetic savings', contents:[{items:[{link:VIP, keep:true}]}]},
+    null, 'unknown'
+  ],
+  userTierInfo: {userLevelName:'synthetic', growthValue:7},
+  ordinarySetting: {keep:true}
+};
+const modules = configResponse(moduleConfig);
+const moduleExpected = clone(moduleConfig); moduleExpected.moduleList.splice(1, 1);
+equalRewrite(MODULES, modules, withConfig(modules, moduleExpected));
+unchanged(MODULES, encoded(modules), {hideHomeMarketing: false});
+const ordinaryModules = clone(moduleConfig); ordinaryModules.moduleList.splice(1,1);
+unchanged(MODULES, encoded(configResponse(ordinaryModules)));
+for (const moduleList of [null, {}, 'unknown', []]) {
+  const config = clone(moduleConfig); config.moduleList = moduleList;
+  unchanged(MODULES, encoded(configResponse(config)));
+}
+
+// Pick-card marketing has a second string-encoded object; visibility flags are typed booleans.
+const pickConfig = {
+  moduleList: {ordinaryPickSetting:{keep:true}},
+  pickMarketingSet: {
+    activityTypeName: '会员营销模块', btnLink: VIP + '?synthetic=button', bannerLink: VIP + '#synthetic',
+    showBtn: true, showBadge: true, showBanner: true,
+    bannerImage:'https://example.invalid/member-pick.png', btnText:'synthetic join',
+    ordinarySetting:{keep:true}
+  },
+  ordinaryModuleConfig: {keep:true}
+};
+const pickItems = [
+  {name:'synthetic member offer', moduleJson:encoded(pickConfig), ordinaryMetadata:{keep:true}},
+  {name:'synthetic ordinary pick', moduleJson:encoded({moduleList:{ordinary:true}})},
+  {name:'synthetic malformed future', moduleJson:'{'}, null, 'unknown'
+];
+const pick = configResponse(pickItems);
+const pickExpectedConfig = clone(pickConfig);
+for (const key of ['showBtn','showBadge','showBanner']) pickExpectedConfig.pickMarketingSet[key] = false;
+const pickExpectedItems = clone(pickItems); pickExpectedItems[0].moduleJson = encoded(pickExpectedConfig);
+equalRewrite(PICK_MARKETING, pick, withConfig(pick, pickExpectedItems));
+unchanged(PICK_MARKETING, encoded(pick), {hideMemberPromotion:false});
+for (const changed of [
+  {activityTypeName:'ordinary pick service'}, {btnLink:VIP + 'Other'}, {bannerLink:VIP + '/details'},
+  {btnLink:'https://example.invalid' + VIP}, {bannerLink:'/pages/SendPackage/boxSend/index'},
+  {btnLink:null}, {bannerLink:{}}, {activityTypeName:null}
+]) {
+  const config = clone(pickConfig); Object.assign(config.pickMarketingSet, changed);
+  unchanged(PICK_MARKETING, encoded(configResponse([{moduleJson:encoded(config)}])));
+}
+const partiallyTyped = clone(pickConfig);
+partiallyTyped.pickMarketingSet.showBtn = true;
+partiallyTyped.pickMarketingSet.showBadge = 'true';
+delete partiallyTyped.pickMarketingSet.showBanner;
+const partiallyTypedExpected = clone(partiallyTyped); partiallyTypedExpected.pickMarketingSet.showBtn = false;
+const partialPick = configResponse([{moduleJson:encoded(partiallyTyped)}]);
+equalRewrite(PICK_MARKETING, partialPick, configResponse([{moduleJson:encoded(partiallyTypedExpected)}]));
+const untouchedTypes = clone(pickConfig);
+untouchedTypes.pickMarketingSet.showBtn = 'true'; untouchedTypes.pickMarketingSet.showBadge = 1;
+untouchedTypes.pickMarketingSet.showBanner = false;
+unchanged(PICK_MARKETING, encoded(configResponse([{moduleJson:encoded(untouchedTypes)}])));
+const missingVisibility = clone(pickConfig);
+for (const key of ['showBtn','showBadge','showBanner']) delete missingVisibility.pickMarketingSet[key];
+unchanged(PICK_MARKETING, encoded(configResponse([{moduleJson:encoded(missingVisibility)}])));
+unchanged(PICK_MARKETING, encoded(configResponse([])));
+for (const moduleJson of ['{', encoded(null), encoded([]), pickConfig, null]) {
+  unchanged(PICK_MARKETING, encoded(configResponse([{moduleJson}])));
+}
+for (const pickMarketingSet of [null, [], 'unknown']) {
+  const config = clone(pickConfig); config.pickMarketingSet = pickMarketingSet;
+  unchanged(PICK_MARKETING, encoded(configResponse([{moduleJson:encoded(config)}])));
+}
+
+// Malformed outer strings and unsuccessful envelopes remain byte-identical on each new route.
+for (const [url, input] of [[HEADER,header], [BATCH,batch], [MODULES,modules], [PICK_MARKETING,pick]]) {
+  for (const change of [{success:false}, {success:undefined}, {code:'failure'}, {data:[]}, {data:null}]) {
+    unchanged(url, encoded(Object.assign(clone(input), change)));
+  }
+  if (url !== BATCH) {
+    for (const homePageConfig of ['{', encoded(null), encoded('unknown'), {}, null]) {
+      const variant = clone(input); variant.data.homePageConfig = homePageConfig;
+      unchanged(url, encoded(variant));
+    }
+  }
+}
+
 const dspBody = encoded(noFlags);
 // URL matching must not bleed into lookalike domains, route prefixes, or business APIs.
 const unrelated = [
@@ -148,6 +329,8 @@ const unrelated = [
   WEB + '/post/suggestion/queryOther', WEB + '/post/suggestion/query/extra',
   WEB + '/commerce/mobile/appConfig/getPositionsOther',
   WEB + '/fcboxactivityweb/api/v2/clientPage/getUserClientPageInfoExtra',
+  HEADER + 'Other', HEADER + '/extra', BATCH + 'Other', BATCH + '/extra',
+  MODULES + 'Other', MODULES + '/extra', PICK_MARKETING + 'Other', PICK_MARKETING + '/extra',
   WEB + '/post/order/list', WEB + '/post/order/pay', WEB + '/post/pick/code',
   'not a URL'
 ];
@@ -182,6 +365,15 @@ assert.deepEqual(JSON.parse(JSON.stringify(requestResult)), {headers: requestHea
 const responseResult = execute({$request: {url: SUGGESTION, headers}, $response: {body: encoded(suggestion)}});
 assert.deepEqual(Object.keys(responseResult), ['body']);
 assert.deepEqual(JSON.parse(responseResult.body), suggestionExpected);
+for (const [url, input, expected] of [
+  [HEADER, header, withConfig(header, Object.assign(clone(headConfig), {headImg:null}))],
+  [BATCH, batch, batchExpected], [MODULES, modules, withConfig(modules, moduleExpected)],
+  [PICK_MARKETING, pick, withConfig(pick, pickExpectedItems)]
+]) {
+  const output = execute({$request:{url,headers}, $response:{body:encoded(input)}});
+  assert.deepEqual(Object.keys(output), ['body']);
+  assert.deepEqual(JSON.parse(output.body), expected);
+}
 for (const url of [SUGGESTION, 'https://example.invalid/ordinary']) {
   const responseResult = execute({$request:{url,headers}, $response:{body:'{'}});
   assert(!responseResult || !responseResult.body || responseResult.body === '{', 'errors must keep original response');
