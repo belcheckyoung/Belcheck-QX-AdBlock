@@ -102,11 +102,16 @@ https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite
 
 检查 `[mitm]` 的 `hostname`：如有 `-*amemv.com`、`-*snssdk.com`，仅移除这两项，保留其他设置。模块已声明所需的具体主机。再确认 Rewrite、MitM 与 CA 信任状态，更新资源、重连 QX 并重启抖音。
 
+### 微信公众号广告清理（兼容性试验）
+
+[安装说明与覆盖范围](Docs/WeChatAdClean.md)：仅处理 `mp.weixin.qq.com/mp/getappmsgad` 已知结构中的顶层广告计数和列表，保留 `appid`、其他字段及其原文。接口线索来自 Choler / NobyDa，当前验证为合成数据与规则边界测试，手机效果待验证。配合已有小程序素材规则按项启用，不承诺朋友圈、视频号或所有小程序广告均可去除。
+
 ### 只安装自研模块
 
 已有自己的 Quantumult X 配置时，不必替换完整配置。在 `[rewrite_remote]` 中加入：
 
 ```ini
+https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite/WeChatAdClean.snippet, tag=微信公众号广告清理, update-interval=86400, opt-parser=false, enabled=true
 https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite/FengChaoAdClean.snippet, tag=丰巢小程序广告与推广净化, update-interval=86400, opt-parser=false, enabled=true
 https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite/CaiNiaoUIClean.snippet, tag=菜鸟界面与广告净化, update-interval=86400, opt-parser=false, enabled=true
 https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite/MeituanBikeWeChatAds.snippet, tag=美团单车微信广告清理, update-interval=86400, opt-parser=false, enabled=true

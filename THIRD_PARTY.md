@@ -41,3 +41,7 @@
 ## 抖音广告的字段线索
 
 抖音实验模块的 `aweme_list / is_ads` 历史结构线索参考 [Choler/Surge 的 douyin.js](https://github.com/Choler/Surge/blob/master/Script/douyin.js)。字段字符串与广告接口另从用户提供的 iOS 30.3.0 安装包静态确认；尚未取得对应实际响应。原文切片、精确域名边界、异常放行及测试独立实现，没有复制上游脚本，也没有引入其下载、水印和直播处理。感谢原作者提供线索。
+
+## 微信公众号广告的接口线索
+
+`Scripts/WeChatAdClean.js` 的 `mp.weixin.qq.com/mp/getappmsgad` 接口和 `advertisement_num`、`advertisement_info` 字段参考 [Choler / NobyDa Wechat.js](https://github.com/NobyDa/Script/blob/master/QuantumultX/File/Wechat.js)。本模块独立实现 URL 与响应结构校验、错误放行及原文字段局部替换，保留 `appid` 和其他原始数据，不复制上游脚本文件。该接口线索不代表当前微信或四类广告已完成真机验证。感谢原作者。

@@ -6,3 +6,5 @@ require("./CaiNiaoUIClean.test.js");
 require("./FengChaoAdClean.test.js");
 require("./BilibiliAppAds.test.js");
 require("./DouyinAdClean.test.js");
+
+require("./WeChatAdClean.test.js");

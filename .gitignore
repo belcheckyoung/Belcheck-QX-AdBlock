@@ -47,6 +47,11 @@
 !/Tests/DouyinAdClean.test.js
 !/Docs/DouyinAdClean.md
 
+!/Scripts/WeChatAdClean.js
+!/Rewrite/WeChatAdClean.snippet
+!/Tests/WeChatAdClean.test.js
+!/Docs/WeChatAdClean.md
+
 # Explicitly forbidden private or captured material.
 /sources/
 /attachments/

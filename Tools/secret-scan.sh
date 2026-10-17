@@ -20,6 +20,11 @@ allowed = {
     "Rewrite/DouyinAdClean.snippet",
     "Tests/DouyinAdClean.test.js",
     "Docs/DouyinAdClean.md",
+
+    "Scripts/WeChatAdClean.js",
+    "Rewrite/WeChatAdClean.snippet",
+    "Tests/WeChatAdClean.test.js",
+    "Docs/WeChatAdClean.md",
     "Scripts/FengChaoAdClean.js",
     "Rewrite/FengChaoAdClean.snippet",
     "Tests/FengChaoAdClean.test.js",
