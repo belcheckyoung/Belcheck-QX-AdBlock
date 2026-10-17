@@ -11,7 +11,7 @@
 ^https?:\/\/(?:api3-core-c\.amemv\.com|api3-normal-c\.amemv\.com|api\.amemv\.com|aweme\.snssdk\.com)\/api\/ad\/(?:v1\/splash\/stock|v16\/splash\/preload|splash\/stock\/realtime\/v1[45]|splash\/aweme\/v15)\/?(?:\?[^#]*)?$ url reject
 
 # Default feed dispatch hosts + original API aliases; only explicit is_ads items.
-^https?:\/\/(?:api3-core-c\.amemv\.com|api3-normal-c\.amemv\.com|api\.amemv\.com|aweme\.snssdk\.com)\/aweme\/v[12]\/feed\/?(?:\?[^#]*)?$ url script-response-body https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Scripts/DouyinAdClean.js
+^https?:\/\/(?:api3-core-c\.amemv\.com|api3-normal-c\.amemv\.com|api\.amemv\.com|aweme\.snssdk\.com)\/aweme\/v[12]\/feed\/?(?:\?[^#]*)?$ url script-response-body https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/47a55a8aef98a692afe46ed5ce9b7e99ea820c1e/Scripts/DouyinAdClean.js
 
 # Remove conflicting local -*amemv.com / -*snssdk.com exclusions before use.
 hostname = ad.zijieapi.com, api3-core-c.amemv.com, api3-normal-c.amemv.com, api.amemv.com, aweme.snssdk.com
