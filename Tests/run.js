@@ -5,3 +5,4 @@ require("./PublicConfig.test.js");
 require("./CaiNiaoUIClean.test.js");
 require("./FengChaoAdClean.test.js");
 require("./BilibiliAppAds.test.js");
+require("./DouyinAdClean.test.js");

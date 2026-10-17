@@ -80,6 +80,14 @@ assert.ok(config.includes("tag=去广告, force-policy=广告拦截"));
 assert.ok(config.includes("[mitm]"));
 assert.ok(config.includes("hostname=api.weibo.cn"));
 
+const douyinResources = lines.filter((line) =>
+  line.trim().startsWith("https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite/DouyinAdClean.snippet,")
+);
+assert.strictEqual(douyinResources.length, 1, "publish exactly one optional Douyin module");
+assert.ok(/(?:^|,)\s*enabled=false\s*$/.test(douyinResources[0]), "unverified module must be opt-in");
+assert.ok(config.includes("-*amemv.com"), "preserve existing default MitM exclusion");
+assert.ok(config.includes("-*snssdk.com"), "preserve existing default MitM exclusion");
+
 for (const line of lines) {
   const trimmed = line.trim();
   if (!trimmed || trimmed.startsWith("#") || trimmed.startsWith("//")) continue;

@@ -2,7 +2,7 @@
 
 **Quantumult X 公开配置 · 广告净化 · 应用分流 · 抓包验证 · 隐私脱敏**
 
-Update on 2026-08-25 · Public Config `2.5-public`
+Update on 2026-10-18 · Public Config `2.6-public`
 
 > [!IMPORTANT]
 > **禁止公众号、自媒体对本仓库的整理内容、自研文件或完整配置进行任何形式的转载、镜像或重新发布。** 如需分享，请直接使用本仓库原始链接，并保留 Belcheck 与各上游作者的署名。
@@ -18,7 +18,7 @@ Update on 2026-08-25 · Public Config `2.5-public`
 7. 第三方规则、脚本、图标与工具的版权、许可证、署名要求和免责声明均归其原作者所有。本仓库仅保留原始引用地址，不授予超出上游条款的使用权。
 8. 本项目保留随时补充或修改本声明的权利。继续访问、引用或使用本项目内容，视为已经阅读并接受本声明。
 
-Belcheck QX AdBlock 是一套可直接导入、也可拆分订阅的 Quantumult X 配置。它以作者的日常配置为基础，整合社区长期维护的分流与重写资源，并加入基于真实流量验证的低误伤广告模块。
+Belcheck QX AdBlock 是一套可直接导入、也可拆分订阅的 Quantumult X 配置。它以作者的日常配置为基础，整合社区长期维护的分流与重写资源，并加入基于真实流量验证的低误伤广告模块及明确标注证据范围的实验模块。
 
 这里不追求“规则越多越好”。自研规则只处理已经确认的接口、字段、路径或素材主机；结构不明、响应异常或证据不足时保持原样放行。
 
@@ -30,7 +30,7 @@ Belcheck QX AdBlock 是一套可直接导入、也可拆分订阅的 Quantumult 
 | 项目 | 说明 |
 | --- | --- |
 | 配置文件 | [`Config/Belcheck-QX-Public.conf`](Config/Belcheck-QX-Public.conf) |
-| 更新时间 | 2026-08-25 |
+| 更新时间 | 2026-10-18 |
 | 默认网络 | 无代理节点，全部策略可回退为 `direct` |
 | 主要功能 | 广告与隐私规则、应用分流、会员模块、网页优化、功能增强、BoxJS、流媒体查询 |
 | 隐私状态 | 已移除节点、订阅、凭据、CA 与真实抓包数据 |
@@ -89,6 +89,18 @@ https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Config/
 [安装说明与处理范围](Docs/FengChaoAdClean.md)：1.6.0 根据两次记录清理广告下发、微信广告配置、首页会员头图、寄件与取件卡营销、明确标注的首页广告模块，并预防性拦截 RTM 专用广告路径。用户反馈的独立开屏仍未从可读流量定位，手机效果待验证。安装前检查并移除现有 `-*.fcbox.com` MitM 排除项。
 
 **2026-10-05 设备反馈：高德地图、测测等独立开屏仍出现。** 最新记录确认已有响应清理已生效，但没有找到这类开屏的可读下发接口；黑屏倒计时不等于去除广告页面。本模块目前不能承诺移除它们，规则版本仍为 1.6.0。
+
+### 抖音广告清理（实验，新增）
+
+[安装说明与处理范围](Docs/DouyinAdClean.md)：依据抖音 iOS 30.3.0 安装包中的广告 URL、开屏路径、默认 API 分发配置和字段，实现精确路径拦截及 `aweme_list` 内明确 `is_ads` 广告条目过滤。保留普通视频、直播、分页与原始数字文本。
+
+**本模块尚无实际广告响应或手机效果验收，完整公开配置默认关闭。** 安装试用时，在自己的 `[rewrite_remote]` 中单独加入：
+
+```ini
+https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite/DouyinAdClean.snippet, tag=抖音广告清理-实验, update-interval=86400, opt-parser=false, enabled=true
+```
+
+检查 `[mitm]` 的 `hostname`：如有 `-*amemv.com`、`-*snssdk.com`，仅移除这两项，保留其他设置。模块已声明所需的具体主机。再确认 Rewrite、MitM 与 CA 信任状态，更新资源、重连 QX 并重启抖音。
 
 ### 只安装自研模块
 

@@ -1,0 +1,17 @@
+#!name=抖音广告清理-实验
+#!desc=0.1.0 基于抖音30.3.0静态接口清理开屏候选和明确标记的信息流广告；无真机验收，未知响应原样放行
+#!author=Belcheck
+#!homepage=https://github.com/belcheckyoung/Belcheck-QX-AdBlock
+
+# Exact ad URLs recovered from the IPA; runtime use and UI effect are unverified.
+^https?:\/\/ad\.zijieapi\.com\/api\/ad\/v1\/(?:slot|long\/video|recall_ads\/banner)\/?(?:\?[^#]*)?$ url reject
+
+# Splash paths are embedded in the IPA. Pairing them with these default API hosts
+# is preventive coverage, not a captured splash host/path association.
+^https?:\/\/(?:api3-core-c\.amemv\.com|api3-normal-c\.amemv\.com|api\.amemv\.com|aweme\.snssdk\.com)\/api\/ad\/(?:v1\/splash\/stock|v16\/splash\/preload|splash\/stock\/realtime\/v1[45]|splash\/aweme\/v15)\/?(?:\?[^#]*)?$ url reject
+
+# Default feed dispatch hosts + original API aliases; only explicit is_ads items.
+^https?:\/\/(?:api3-core-c\.amemv\.com|api3-normal-c\.amemv\.com|api\.amemv\.com|aweme\.snssdk\.com)\/aweme\/v[12]\/feed\/?(?:\?[^#]*)?$ url script-response-body https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Scripts/DouyinAdClean.js
+
+# Remove conflicting local -*amemv.com / -*snssdk.com exclusions before use.
+hostname = ad.zijieapi.com, api3-core-c.amemv.com, api3-normal-c.amemv.com, api.amemv.com, aweme.snssdk.com

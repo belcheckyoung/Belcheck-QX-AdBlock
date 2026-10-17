@@ -42,6 +42,11 @@
 !/Tests/BilibiliAppAds.test.js
 !/Docs/BilibiliAppAds.md
 
+!/Scripts/DouyinAdClean.js
+!/Rewrite/DouyinAdClean.snippet
+!/Tests/DouyinAdClean.test.js
+!/Docs/DouyinAdClean.md
+
 # Explicitly forbidden private or captured material.
 /sources/
 /attachments/

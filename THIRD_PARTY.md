@@ -37,3 +37,7 @@
 ## 哔哩哔哩 App 广告补丁
 
 广告结构依据本次网络记录独立识别，二进制回传遵循 [Quantumult X 官方示例](https://github.com/crossutility/Quantumult-X/blob/master/sample-bytes-rewrite.js) 和 [gRPC 协议](https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md)。`Scripts/BilibiliAppAds.js` 内嵌 [fflate 0.8.3](https://github.com/101arrowz/fflate) UMD 发布代码处理 gzip，作者 Arjun Barrett，MIT 许可证完整保留在脚本头部。未复制第三方广告脚本。
+
+## 抖音广告的字段线索
+
+抖音实验模块的 `aweme_list / is_ads` 历史结构线索参考 [Choler/Surge 的 douyin.js](https://github.com/Choler/Surge/blob/master/Script/douyin.js)。字段字符串与广告接口另从用户提供的 iOS 30.3.0 安装包静态确认；尚未取得对应实际响应。原文切片、精确域名边界、异常放行及测试独立实现，没有复制上游脚本，也没有引入其下载、水印和直播处理。感谢原作者提供线索。

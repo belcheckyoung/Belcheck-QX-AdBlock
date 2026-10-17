@@ -1,8 +1,8 @@
 {
   "name": "belcheck-qx-adblock",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "private": true,
-  "description": "Capture-verified Quantumult X ad-blocking rules and response rewrites.",
+  "description": "Quantumult X ad-blocking rules and response rewrites with explicit evidence levels.",
   "scripts": {
     "test": "node Tests/run.js",
     "scan:secrets": "bash Tools/secret-scan.sh"
