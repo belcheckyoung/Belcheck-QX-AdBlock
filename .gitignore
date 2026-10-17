@@ -37,6 +37,11 @@
 !/Tests/FengChaoAdClean.test.js
 !/Docs/FengChaoAdClean.md
 
+!/Scripts/BilibiliAppAds.js
+!/Rewrite/BilibiliAppAds.snippet
+!/Tests/BilibiliAppAds.test.js
+!/Docs/BilibiliAppAds.md
+
 # Explicitly forbidden private or captured material.
 /sources/
 /attachments/

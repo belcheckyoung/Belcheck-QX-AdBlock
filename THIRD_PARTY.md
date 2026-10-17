@@ -33,3 +33,7 @@
 ## 丰巢广告的接口线索
 
 丰巢响应清理依据本次网络记录独立实现。补充 RTM 专用广告路径的定位参考 [fmz200/wool_scripts](https://github.com/fmz200/wool_scripts/blob/main/Loon/plugin/blockAds.plugin)；丰巢 DSP 域名及页面配置线索也参考 [blackmatrix7/ios_rule_script](https://github.com/blackmatrix7/ios_rule_script/blob/master/rewrite/QuantumultX/AllInOne/AllInOne.conf)。未将上游整个文件复制或改名发布。感谢上游维护者。
+
+## 哔哩哔哩 App 广告补丁
+
+广告结构依据本次网络记录独立识别，二进制回传遵循 [Quantumult X 官方示例](https://github.com/crossutility/Quantumult-X/blob/master/sample-bytes-rewrite.js) 和 [gRPC 协议](https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md)。`Scripts/BilibiliAppAds.js` 内嵌 [fflate 0.8.3](https://github.com/101arrowz/fflate) UMD 发布代码处理 gzip，作者 Arjun Barrett，MIT 许可证完整保留在脚本头部。未复制第三方广告脚本。

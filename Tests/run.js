@@ -4,3 +4,4 @@ require("./MeituanAppAdMedia.test.js");
 require("./PublicConfig.test.js");
 require("./CaiNiaoUIClean.test.js");
 require("./FengChaoAdClean.test.js");
+require("./BilibiliAppAds.test.js");

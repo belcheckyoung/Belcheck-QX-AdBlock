@@ -202,3 +202,12 @@ npm run scan:secrets
 完整的资源来源、引用边界和维护者说明见 [`THIRD_PARTY.md`](THIRD_PARTY.md)。如有署名遗漏或归属变化，欢迎提交 Issue 指正。
 
 本项目与 Quantumult X、上述作者及相关服务没有隶属或官方合作关系。
+
+## 哔哩哔哩 App 广告补丁
+
+[安装说明与验证范围](Docs/BilibiliAppAds.md)。基于 2026-10-18 网络记录，补充新版相关推荐广告和商业开屏清理，按独立模块启停。
+
+```ini
+[rewrite_remote]
+https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite/BilibiliAppAds.snippet, tag=哔哩哔哩App广告补丁, update-interval=86400, opt-parser=false, enabled=true
+```
