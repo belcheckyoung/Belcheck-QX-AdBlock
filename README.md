@@ -228,3 +228,15 @@ npm run scan:secrets
 [rewrite_remote]
 https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Rewrite/BilibiliAppAds.snippet, tag=哔哩哔哩App广告补丁, update-interval=86400, opt-parser=false, enabled=true
 ```
+
+## 富途牛牛分流
+
+[`Filters/FutubullProxy.list`](Filters/FutubullProxy.list) 可独立订阅。规则基于 iOS 客户端的网络活动记录，覆盖已确认的富途域名及两个第三方主机。其他应用访问同一第三方主机时也会命中。
+
+把以下一行加在现有 `[filter_remote]` 段靠前的位置，放在国内域名合集等通用资源之前。
+
+```ini
+https://raw.githubusercontent.com/belcheckyoung/Belcheck-QX-AdBlock/main/Filters/FutubullProxy.list, tag=富途牛牛, force-policy=proxy, update-interval=86400, opt-parser=false, enabled=true
+```
+
+如需指定策略组，把 `force-policy=proxy` 改成实际组名，例如 `force-policy=国外流量`，并在该组选中代理节点。公开配置的「国外流量」默认是直连。保存后更新分流资源，切到规则分流，重新打开富途牛牛，在网络活动里核对命中规则与出站节点。
