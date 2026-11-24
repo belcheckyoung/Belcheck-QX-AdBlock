@@ -12,6 +12,7 @@ import subprocess
 import sys
 
 allowed = {
+    "Filters/FutubullProxy.list",
     "Scripts/BilibiliAppAds.js",
     "Rewrite/BilibiliAppAds.snippet",
     "Tests/BilibiliAppAds.test.js",

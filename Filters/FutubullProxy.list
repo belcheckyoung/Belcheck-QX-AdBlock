@@ -1,0 +1,9 @@
+# Quantumult X filter list
+# Futubull iOS destinations confirmed in a network capture.
+# Shared third-party destinations are scoped to exact hostnames.
+
+host-suffix, futunn.com, proxy
+host-suffix, futuhn.com, proxy
+host-suffix, futustatic.com, proxy
+host, license.vod2.myqcloud.com, proxy
+host, app-analytics-services.com, proxy
